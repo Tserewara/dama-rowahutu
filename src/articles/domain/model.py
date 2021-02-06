@@ -6,6 +6,7 @@ from typing import List
 
 class Category(Enum):
     GUIDE = 1
+    SHORT = 2
 
 
 @dataclass
