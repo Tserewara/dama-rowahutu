@@ -1,13 +1,18 @@
 from src.articles.adapters import repository
 from src.articles.domain import model
+from src.articles.services import unit_of_work
 
 
 def add_article(
-        article: model.Article,
-        repo: repository.AbstractRepository,
-        session) -> str:
+        title: str,
+        description: str,
+        content: str,
+        tags: list,
+        uow: unit_of_work.AbstractUnitOfWork) -> str:
 
-    repo.add(article)
-    session.commit()
+    with uow:
+        article = model.Article(title, description, content, tags)
+        uow.articles.add(article)
+        uow.commit()
 
-    return article.title
+    return title
