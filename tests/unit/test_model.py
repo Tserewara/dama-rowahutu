@@ -39,4 +39,4 @@ def test_can_create_short_article_with_timestamp():
 
     )
 
-    assert article.date == datetime.now()
+    assert article.created_on == datetime.now()
