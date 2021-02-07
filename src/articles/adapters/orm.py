@@ -23,8 +23,10 @@ tags = Table('tags', metadata,
 article_tags = Table('article_tags', metadata,
                      Column('id', Integer, primary_key=True,
                             autoincrement=True),
-                     Column('article_id', Integer, ForeignKey('articles.id')),
-                     Column('tag_id', Integer, ForeignKey('tags.id'))
+                     Column('article_id', Integer,
+                            ForeignKey('articles.id')),
+                     Column('tag_id', Integer,
+                            ForeignKey('tags.id'))
                      )
 
 
@@ -33,7 +35,7 @@ def start_mappers():
     mapper(model.Article, articles, properties={
         'tags': relationship(
             tags_mapper,
-            secondary=article_tags
+            secondary=article_tags,
+            backref='tags'
         )
     })
-
