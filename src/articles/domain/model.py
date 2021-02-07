@@ -28,4 +28,4 @@ class Article:
         self.content = content
         self.tags = tags
         self.category = category
-        self.date = datetime.now()
+        self.created_on = datetime.now()

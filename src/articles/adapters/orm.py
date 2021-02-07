@@ -1,5 +1,7 @@
+from datetime import datetime
+
 from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey, \
-    Enum
+    Enum, DateTime, func
 from sqlalchemy.orm import mapper, relationship
 
 from src.articles.domain import model
@@ -12,7 +14,9 @@ articles = Table('articles', metadata,
                         nullable=False),
                  Column('description', String, nullable=False),
                  Column('content', String, nullable=False),
-                 Column('category', Enum(model.Category))
+                 Column('category', Enum(model.Category)),
+                 Column('created_on', DateTime(timezone=True),
+                        server_default=func.now()),
                  )
 
 tags = Table('tags', metadata,
