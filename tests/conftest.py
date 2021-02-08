@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 import requests
 from sqlalchemy import create_engine
+from requests.exceptions import ConnectionError
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import sessionmaker, clear_mappers
 
@@ -62,8 +63,27 @@ def postgres_db():
 @pytest.fixture
 def postgres_session(postgres_db):
     start_mappers()
-    yield sessionmaker(bind=postgres_db)()
+    session = sessionmaker(bind=postgres_db)()
+    clear_postgres_articles(session)
+    clear_postgres_tags(session)
+    yield session
+    clear_postgres_articles(session)
+    clear_postgres_tags(session)
     clear_mappers()
+
+
+def clear_postgres_tags(postgres_session):
+    postgres_session.execute(
+        'DELETE FROM tags'
+    )
+    postgres_session.commit()
+
+
+def clear_postgres_articles(postgres_session):
+    postgres_session.execute(
+        'DELETE FROM articles'
+    )
+    postgres_session.commit()
 
 
 @pytest.fixture

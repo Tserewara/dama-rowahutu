@@ -14,10 +14,6 @@ class CategoryNotFound(Exception):
     pass
 
 
-class TagNotFound(Exception):
-    pass
-
-
 @dataclass
 class Tag:
     name: str

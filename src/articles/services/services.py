@@ -11,7 +11,9 @@ def add_article(
         category_id: id,
         uow: unit_of_work.AbstractUnitOfWork,
         tags: list = None) -> str:
+
     with uow:
+
         category = get_category(category_id)
 
         if not category:
