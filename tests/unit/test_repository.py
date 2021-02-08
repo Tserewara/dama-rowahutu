@@ -12,7 +12,7 @@ def test_repository_can_add_an_article(session):
         category=model.Category.GUIDE
     )
 
-    repo = repository.SqlAlchemyRepository(session)
+    repo = repository.SqlAlchemyRepositoryArticles(session)
 
     repo.add(article)
     session.commit()
