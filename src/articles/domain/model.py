@@ -14,6 +14,10 @@ class CategoryNotFound(Exception):
     pass
 
 
+class TagNotFound(Exception):
+    pass
+
+
 @dataclass
 class Tag:
     name: str
@@ -25,9 +29,8 @@ class Article:
                  title: str,
                  description: str,
                  content: str,
-                 tags: List,
+                 tags: List[Tag],
                  category: Category = Category.GUIDE):
-
         self.title = title
         self.description = description
         self.content = content

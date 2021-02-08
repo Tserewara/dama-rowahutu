@@ -8,14 +8,16 @@ def add_article(
         title: str,
         description: str,
         content: str,
-        tags: list,
         category_id: id,
-        uow: unit_of_work.AbstractUnitOfWork) -> str:
+        uow: unit_of_work.AbstractUnitOfWork,
+        tags: list = None) -> str:
     with uow:
         category = get_category(category_id)
 
         if not category:
             raise model.CategoryNotFound('Category not found')
+
+        tags = get_valid_tags_by_name(tags, uow)
 
         article = model.Article(
             title,
@@ -24,6 +26,7 @@ def add_article(
             tags,
             category
         )
+
         uow.articles.add(article)
         uow.commit()
 
@@ -49,3 +52,10 @@ def list_tags(uow: unit_of_work.AbstractUnitOfWork) -> List[model.Tag]:
         tags = uow.tags.list()
 
     return tags
+
+
+def get_valid_tags_by_name(tags: Union[list, None], uow) -> List[model.Tag]:
+    if not tags:
+        return []
+
+    return [tag for tag in tags if tag in list_tags(uow)]

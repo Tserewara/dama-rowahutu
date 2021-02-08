@@ -1,3 +1,5 @@
+import pytest
+
 from src.articles.adapters import repository
 from src.articles.domain import model
 from src.articles.services import services, unit_of_work
@@ -44,8 +46,7 @@ def test_service_adds_an_article():
         'description': 'A great description',
         'content': 'This is a useful article',
         'category_id': 1,
-        'tags': [model.Tag('verbos')],
-
+        'tags': ['verbos', 'substantivos'],
     }
 
     uow = FakeUnitOfWork()
@@ -53,6 +54,21 @@ def test_service_adds_an_article():
     article_title = services.add_article(**article, uow=uow)
 
     assert article_title == 'An article'
+
+
+def test_raises_error_when_category_is_not_found():
+    article = {
+        'title': 'An article',
+        'description': 'A great description',
+        'content': 'This is a useful article',
+        'category_id': 5,
+        'tags': ['verbos'],
+    }
+
+    with pytest.raises(model.CategoryNotFound,
+                       match='Category not found'):
+        uow = FakeUnitOfWork()
+        services.add_article(**article, uow=uow)
 
 
 def test_category_exists():
@@ -75,3 +91,27 @@ def test_list_tags():
     services.add_tag('vocabulário', uow)
 
     assert services.list_tags(uow) == ['verbos', 'vocabulário']
+
+
+def test_gets_valid_tags():
+    uow = FakeUnitOfWork()
+
+    taglist = ['verbos', 'vocabulário', 'pronomes']
+
+    for tag in taglist:
+        services.add_tag(tag, uow)
+
+    tags_to_check = taglist + ['invalid 1', 'invalid 2']
+
+    valid_tags = services.get_valid_tags_by_name(tags_to_check, uow)
+
+    assert valid_tags == taglist
+
+
+def test_returns_empty_list_when_tags_is_none():
+    uow = FakeUnitOfWork()
+
+    valid_tags = services.get_valid_tags_by_name(None, uow)
+
+    assert valid_tags == []
+
