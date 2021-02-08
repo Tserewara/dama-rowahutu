@@ -6,7 +6,12 @@ from typing import List
 
 class Category(Enum):
     GUIDE = 1
-    SHORT = 2
+    CULTURE = 2
+    EXERCISES = 3
+
+
+class CategoryNotFound(Exception):
+    pass
 
 
 @dataclass

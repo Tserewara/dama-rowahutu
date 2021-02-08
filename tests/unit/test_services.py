@@ -31,6 +31,7 @@ def test_service_adds_an_article():
         'title': 'An article',
         'description': 'A great description',
         'content': 'This is a useful article',
+        'category_id': 1,
         'tags': [model.Tag('verbos')],
 
     }
@@ -40,3 +41,8 @@ def test_service_adds_an_article():
     article_title = services.add_article(**article, uow=uow)
 
     assert article_title == 'An article'
+
+
+def test_category_exists():
+    assert services.get_category(1)
+    assert not services.get_category(999)
