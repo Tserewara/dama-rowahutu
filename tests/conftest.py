@@ -89,6 +89,6 @@ def clear_postgres_articles(postgres_session):
 @pytest.fixture
 def restart_api():
     (Path(__file__).parent /
-     '../src/articles/entrypoints/flask_app.py').touch()
+     '../src/articles/entrypoints/web_app.py').touch()
     time.sleep(0.5)
     wait_for_webapp_to_come_up()
