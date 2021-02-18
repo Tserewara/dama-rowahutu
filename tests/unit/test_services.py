@@ -114,4 +114,3 @@ def test_returns_empty_list_when_tags_is_none():
     valid_tags = services.get_valid_tags_by_name(None, uow)
 
     assert valid_tags == []
-

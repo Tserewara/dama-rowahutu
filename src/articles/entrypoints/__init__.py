@@ -1,6 +1,5 @@
 from flask import Flask
 
-from src.articles.entrypoints.rest import ArticlesAPI
 from src.articles.entrypoints.routes import register_routes
 
 
@@ -14,6 +13,3 @@ def create_app():
     app = register_routes(app)
 
     return app
-
-
-

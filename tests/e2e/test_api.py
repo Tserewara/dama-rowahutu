@@ -21,8 +21,3 @@ def test_happy_path_returns_201_and_article_title(postgres_session):
 
     assert r.status_code == 201
     assert r.json()['message'] == 'An article'
-
-
-
-
-

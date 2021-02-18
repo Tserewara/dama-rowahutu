@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from src.articles.domain import model
 
 

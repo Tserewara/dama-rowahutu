@@ -1,4 +1,4 @@
-from src.articles.entrypoints import ArticlesAPI
+from src.articles.entrypoints.rest import ArticlesAPI
 
 
 def register_routes(app):
