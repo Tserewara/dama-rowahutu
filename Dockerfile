@@ -10,6 +10,8 @@ WORKDIR dama-rowahutu/
 
 COPY src/ src/
 
+COPY tests/ tests/
+
 COPY requirements.txt .
 
 RUN pip3 install -r requirements.txt
