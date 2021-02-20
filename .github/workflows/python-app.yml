@@ -20,11 +20,15 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.9
-    - name: Install dependencies
+    - name: bring test container up
       run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          docker-compose build
+          docker-compose up
+#    - name: Install dependencies
+#      run: |
+#        python -m pip install --upgrade pip
+#        pip install flake8 pytest
+#        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
         flake8
