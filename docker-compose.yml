@@ -1,0 +1,31 @@
+version: '3'
+services:
+  database:
+    restart: always
+    build:
+      dockerfile: database/Dockerfile
+      context: .
+    image: damarowahutu-postgres
+    container_name: damarowahutu-db
+    ports:
+      - "5432:5432"
+    networks:
+      - damarowahutunet
+
+  app:
+    restart: on-failure
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: damarowahutu-python
+    container_name: damarowahutu-app
+    ports:
+      - "5000:5000"
+    networks:
+      - damarowahutunet
+    depends_on:
+      - database
+
+networks:
+    damarowahutunet:
+        driver: bridge
