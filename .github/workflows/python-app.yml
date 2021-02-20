@@ -29,4 +29,4 @@ jobs:
         flake8
     - name: Test with pytest
       run: |
-        make test
+        make POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} test

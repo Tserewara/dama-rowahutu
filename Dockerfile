@@ -2,9 +2,11 @@ FROM python:3.8-alpine
 
 RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
 
+ARG POSTGRES_PASSWORD
+
 ENV POSTGRES_HOST=damarowahutu-db
 
-ENV POSTGRES_PASSWORD=tserewara
+ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
 
 WORKDIR dama-rowahutu/
 
