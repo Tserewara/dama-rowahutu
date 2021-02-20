@@ -6,16 +6,14 @@ ENV POSTGRES_HOST=damarowahutu-db
 
 ENV POSTGRES_PASSWORD=tserewara
 
-WORKDIR damarowahutu/
+WORKDIR dama-rowahutu/
 
 COPY src/ src/
 
 COPY requirements.txt .
 
-COPY run.sh .
-
 RUN pip3 install -r requirements.txt
 
 EXPOSE 5000
 
-CMD ["sh", "run.sh"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "-w", "4", "src.articles.entrypoints.web_app:app"]
