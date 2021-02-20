@@ -5,7 +5,8 @@ from sqlalchemy.exc import OperationalError, ProgrammingError
 from sqlalchemy.orm import sessionmaker
 
 from src.articles import config
-from src.articles.adapters.orm import metadata, articles
+from src.articles.adapters.orm import metadata, articles, start_mappers
+from src.articles.domain import model
 
 
 def tables_exist():
@@ -34,3 +35,38 @@ def wait_for_postgres_to_come_up():
         except OperationalError:
             time.sleep(0.5)
             print("POSTGRES NEVER CAME UP...")
+
+
+def populate():
+    start_mappers()
+    articles = [
+        {
+            'title': 'Artigo 1',
+            'description': 'Descrição memorável',
+            'content': 'Conteúdo top',
+            'tags': [],
+        },
+        {
+            'title': 'Artigo 2',
+            'description': 'Descrição memorável',
+            'content': 'Conteúdo top',
+            'tags': [],
+        },
+        {
+            'title': 'Artigo 3',
+            'description': 'Descrição memorável',
+            'content': 'Conteúdo top',
+        }
+    ]
+
+    session = sessionmaker(bind=create_engine(config.get_postgres_uri()))()
+
+    for article in articles:
+        session.add(model.Article(
+            title=article['title'],
+            description=article['description'],
+            content=article['content'],
+            tags=[]
+        ))
+
+        session.commit()

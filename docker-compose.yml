@@ -7,6 +7,8 @@ services:
       context: .
     image: damarowahutu-postgres
     container_name: damarowahutu-db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
@@ -29,3 +31,5 @@ services:
 networks:
     damarowahutunet:
         driver: bridge
+volumes:
+  pgdata:

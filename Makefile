@@ -1,7 +1,7 @@
 build:
 	docker-compose build --build-arg POSTGRES_PASSWORD=$(POSTGRES_PASSWORD)
 
-up:
+up: build
 	docker-compose up -d
 
 test: build up
