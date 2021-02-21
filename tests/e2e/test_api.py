@@ -4,7 +4,6 @@ import requests
 from src.articles import config
 
 
-# @pytest.mark.skip('temp skip')
 @pytest.mark.usefixtures('restart_api')
 def test_happy_path_returns_201_and_article_title(postgres_session):
 
@@ -22,3 +21,23 @@ def test_happy_path_returns_201_and_article_title(postgres_session):
 
     assert r.status_code == 201
     assert r.json()['message'] == 'An article'
+
+
+@pytest.mark.usefixtures('restart_api')
+def test_unhappy_path_returns_201_and_article_title(postgres_session):
+
+    url = config.get_api_url()
+
+    article = {
+        "title": "An article",
+        "description": "A remarkable description",
+        "content": "Some very useful content",
+        "tags": [],
+        "category_id": 1
+    }
+
+    requests.post(f'{url}/articles', json=article)
+    r = requests.post(f'{url}/articles', json=article)
+
+    assert r.status_code == 404
+    assert r.json()['message'] == 'Can\'t create article. Title duplicate.'

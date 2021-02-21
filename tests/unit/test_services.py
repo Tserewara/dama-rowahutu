@@ -56,6 +56,23 @@ def test_service_adds_an_article():
     assert article_title == 'An article'
 
 
+def test_raises_error_for_duplicate_title():
+    article = {
+        'title': 'An article',
+        'description': 'A great description',
+        'content': 'This is a useful article',
+        'category_id': 1,
+        'tags': ['verbos', 'substantivos'],
+    }
+
+    uow = FakeUnitOfWork()
+
+    with pytest.raises(model.DuplicateTitle,
+                       match="Can't create article. Title duplicate."):
+        services.add_article(**article, uow=uow)
+        services.add_article(**article, uow=uow)
+
+
 def test_raises_error_when_category_is_not_found():
     article = {
         'title': 'An article',

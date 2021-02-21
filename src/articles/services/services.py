@@ -11,10 +11,13 @@ def add_article(
         category_id: id,
         uow: unit_of_work.AbstractUnitOfWork,
         tags: list = None) -> str:
-
     with uow:
 
         category = get_category(category_id)
+
+        if title_is_duplicate(title, uow):
+            raise model.DuplicateTitle('Can\'t create article. Title '
+                                       'duplicate.')
 
         if not category:
             raise model.CategoryNotFound('Category not found')
@@ -33,6 +36,16 @@ def add_article(
         uow.commit()
 
     return title
+
+
+def title_is_duplicate(title: str, uow: unit_of_work.AbstractUnitOfWork):
+    with uow:
+
+        try:
+            return next(article.title for article in uow.articles.list() if
+                        article.title == title) is not None
+        except StopIteration:
+            return False
 
 
 def get_category(category: int) -> Union[model.Category, None]:

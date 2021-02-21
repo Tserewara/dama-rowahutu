@@ -14,6 +14,10 @@ class CategoryNotFound(Exception):
     pass
 
 
+class DuplicateTitle(Exception):
+    pass
+
+
 @dataclass
 class Tag:
     name: str

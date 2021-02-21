@@ -21,5 +21,5 @@ class ArticlesAPI(MethodView):
 
             return jsonify(message=article), 201
 
-        except model.CategoryNotFound as e:
+        except (model.CategoryNotFound, model.DuplicateTitle) as e:
             return jsonify(message=str(e)), 404

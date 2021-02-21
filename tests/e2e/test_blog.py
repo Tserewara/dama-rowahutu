@@ -4,7 +4,6 @@ import requests
 from src.articles import config
 
 
-# @pytest.mark.skip('temp skip')
 @pytest.mark.usefixtures('restart_api')
 def test_happy_path_returns_home_page_and_200(postgres_session):
     url = config.get_api_url()
