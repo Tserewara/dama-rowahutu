@@ -1,8 +1,7 @@
 from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey, \
-    Enum, DateTime, func
+    Enum, DateTime, func, Boolean
 from sqlalchemy.orm import mapper, relationship
-
-from src.articles.domain import model
+from src.articles.domain import model, credential
 
 metadata = MetaData()
 
@@ -31,9 +30,19 @@ article_tags = Table('article_tags', metadata,
                             ForeignKey('tags.id'))
                      )
 
+credentials = Table('credentials', metadata,
+                    Column('id', Integer, primary_key=True,
+                           autoincrement=True),
+                    Column('username', String, index=True,
+                           unique=True, nullable=False),
+                    Column('password', String, nullable=False),
+                    Column('active', Boolean)
+                    )
+
 
 def start_mappers():
     tags_mapper = mapper(model.Tag, tags)
+
     mapper(model.Article, articles, properties={
         'tags': relationship(
             tags_mapper,
@@ -41,3 +50,5 @@ def start_mappers():
             backref='tags'
         )
     })
+
+    mapper(credential.Credential, credentials)

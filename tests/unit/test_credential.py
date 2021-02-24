@@ -1,5 +1,3 @@
-from uuid import UUID, uuid4
-
 import pytest
 
 from src.articles.domain import credential
@@ -7,31 +5,15 @@ from src.articles.domain import credential
 
 class TestFactory:
 
-    def test_when_has_no_uuid_adds_uuid(self):
-        my_credential = credential.Credential.factory('username', 'password')
-        assert isinstance(my_credential.uuid, UUID)
-
-    def test_when_has_uuid_keeps_what_was_set(self):
-        uuid_value = uuid4()
-
-        my_credential = credential.Credential.factory(
-            'username',
-            'password',
-            uuid_value
-        )
-
-        assert my_credential.uuid == uuid_value
-
     def test_raises_credential_value_error_when_has_no_username(self):
         with pytest.raises(credential.CredentialValueError,
                            match='All arguments are required'):
-            credential.Credential.factory(None, 'password', uuid4())
+            credential.Credential.factory(None, 'password')
 
     def test_creates_credential_instance(self):
         my_credential = credential.Credential.factory(
             'username',
             'password',
-            uuid4(),
         )
 
         assert isinstance(my_credential, credential.Credential)
@@ -42,7 +24,6 @@ class TestFactory:
         my_credential = credential.Credential.factory(
             'username',
             password,
-            uuid4(),
         )
 
         assert my_credential.password == password
@@ -51,9 +32,7 @@ class TestFactory:
 class TestCredentialProperties:
 
     def setup(self):
-        uuid_value = uuid4()
         self.params = {
-            "uuid": uuid_value,
             "username": "Tserewara",
             "password": "password",
             "active": True
@@ -62,12 +41,8 @@ class TestCredentialProperties:
         self.credential = credential.Credential.factory(
             self.params['username'],
             self.params['password'],
-            self.params['uuid'],
             self.params['active'],
         )
-
-    def test_uuid(self):
-        assert self.credential.uuid == self.params['uuid']
 
     def test_username(self):
         assert self.credential.username == self.params['username']
@@ -82,12 +57,9 @@ class TestCredentialProperties:
 class TestPasswordSetter:
 
     def test_set_password(self):
-        uuid_value = uuid4()
-
         my_credential = credential.Credential.factory(
             'username',
             'password',
-            uuid_value,
         )
 
         old_pass = my_credential.password
@@ -99,52 +71,74 @@ class TestPasswordSetter:
 class TestCredentialEquality:
 
     def test_returns_false_when_username_is_different(self):
-        uuid_value = uuid4()
-
         credential_a = credential.Credential.factory(
             'johndoe',
             'password',
-            uuid_value
         )
 
         credential_b = credential.Credential.factory(
             'fulano',
             'password',
-            uuid_value
         )
 
         assert credential_a != credential_b
 
     def test_returns_false_when_password_is_different(self):
-        uuid_value = uuid4()
-
         credential_a = credential.Credential.factory(
             'johndoe',
             'password1',
-            uuid_value
         )
 
         credential_b = credential.Credential.factory(
             'johndoe',
             'password2',
-            uuid_value
         )
 
         assert credential_a != credential_b
 
     def test_returns_true_when_username_and_password_are_equal(self):
-        uuid_value = uuid4()
 
         credential_a = credential.Credential.factory(
             'johndoe',
             'password',
-            uuid_value
         )
 
         credential_b = credential.Credential.factory(
             'johndoe',
             'password',
-            uuid_value
         )
 
         assert credential_a == credential_b
+
+
+class TestVerifyPassword:
+
+    def test_returns_false_when_password_does_not_match(self):
+        my_credential = credential.Credential.factory(
+            username='tserewara',
+        )
+
+        my_credential.set_password("pass1word")
+
+        assert not my_credential.verify_password('password')
+
+    def test_returns_true_when_password_matches(self):
+        password = 'password'
+        my_credential = credential.Credential.factory(
+            username='tserewara',
+        )
+        my_credential.set_password(password)
+
+        assert my_credential.verify_password(password)
+
+
+class TestDeactivate:
+
+    def test_set_active_to_false_when_deactivates(self):
+        my_credential = credential.Credential.factory(
+            username='tserewara',
+            active=True
+        )
+
+        my_credential.deactivate()
+        assert not my_credential.active

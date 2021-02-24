@@ -1,4 +1,4 @@
-from src.articles.domain import model
+from src.articles.domain import model, credential
 
 
 def tag_factory():
@@ -58,3 +58,17 @@ def test_orm_saves_date_of_article(session):
     session.commit()
 
     assert session.query(model.Article).first().created_on
+
+
+class TestCredential:
+
+    def test_can_save_credential(self, session):
+        my_credential = credential.Credential.factory(
+            username='tserewara',
+            password='password',
+        )
+
+        session.add(my_credential)
+        session.commit()
+
+        assert session.query(credential.Credential).first() == my_credential
