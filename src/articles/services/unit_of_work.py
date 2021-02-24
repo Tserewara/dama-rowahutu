@@ -10,6 +10,7 @@ from src.articles.adapters import repository
 class AbstractUnitOfWork(abc.ABC):
     articles: repository.AbstractRepository
     tags: repository.AbstractRepository
+    credentials: repository.AbstractRepository
 
     def __enter__(self):
         return self
@@ -37,8 +38,12 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
 
     def __enter__(self):
         self.session = self.session_factory()  # type: Session
+
         self.articles = repository.SqlAlchemyRepositoryArticles(self.session)
-        self.articles = repository.SqlAlchemyRepositoryTags(self.session)
+        self.tags = repository.SqlAlchemyRepositoryTags(self.session)
+        self.credentials = repository.SqlAlchemyRepositoryCredentials(
+            self.session)
+
         return super().__enter__()
 
     def __exit__(self, *args):

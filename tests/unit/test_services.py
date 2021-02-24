@@ -27,10 +27,22 @@ class FakeRepositoryTags(repository.AbstractRepository):
         return self._tags
 
 
+class FakeRepositoryCredentials(repository.AbstractRepository):
+    def __init__(self):
+        self._credentials = []
+
+    def add(self, article):
+        self._credentials.append(article)
+
+    def list(self):
+        return self._credentials
+
+
 class FakeUnitOfWork(unit_of_work.AbstractUnitOfWork):
     def __init__(self):
         self.articles = FakeRepositoryArticles()
         self.tags = FakeRepositoryTags()
+        self.credentials = FakeRepositoryCredentials()
         self.committed = False
 
     def commit(self):
@@ -131,3 +143,57 @@ def test_returns_empty_list_when_tags_is_none():
     valid_tags = services.get_valid_tags_by_name(None, uow)
 
     assert valid_tags == []
+
+
+class TestCredentialService:
+
+    def test_service_can_create_credential(self):
+        uow = FakeUnitOfWork()
+
+        my_credential = ('Tserewara', 'password')
+
+        result = services.add_credential(
+            my_credential[0],
+            my_credential[1],
+            uow
+        )
+
+        assert result == f'Credential created for {my_credential[0]}'
+
+    def test_lists_all_credentials(self):
+        uow = FakeUnitOfWork()
+
+        my_credentials = [
+            ('User_A', 'password1'),
+            ('User_B', 'password2'),
+            ('User_C', 'password3'),
+        ]
+
+        for item in my_credentials:
+            services.add_credential(item[0], item[1], uow)
+
+        assert len(services.list_credentials(uow)) == 3
+
+    def test_returns_credential_by_username(self):
+        uow = FakeUnitOfWork()
+
+        my_credential = ('Tserewara', 'password')
+
+        services.add_credential(my_credential[0], my_credential[1], uow)
+
+        result_credential = services.get_credential_by_username(
+            'Tserewara', uow)
+
+        assert result_credential.username == my_credential[0]
+
+    def test_returns_true_when_credential_is_equal(self):
+        uow = FakeUnitOfWork()
+
+        my_credential = ('Tserewara', 'password')
+
+        services.add_credential(my_credential[0], my_credential[1], uow)
+
+        result_credential = services.get_credential_by_username(
+            'Tserewara', uow)
+
+        assert result_credential.verify_password('password')
