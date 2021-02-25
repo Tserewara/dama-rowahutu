@@ -8,6 +8,9 @@ class CredentialValueError(Exception):
 
 
 class AbstractCredential(abc.ABC):
+    username: str
+    password: str
+    active: bool
 
     @classmethod
     @abc.abstractmethod

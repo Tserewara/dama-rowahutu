@@ -1,8 +1,8 @@
 from flask import request, jsonify
 from flask.views import MethodView
 
-from src.articles.domain import model
-from src.articles.services import services, unit_of_work
+from src.articles.domain import exceptions
+from src.articles.services import article_service, unit_of_work
 
 
 class ArticlesAPI(MethodView):
@@ -10,7 +10,7 @@ class ArticlesAPI(MethodView):
     @staticmethod
     def post():
         try:
-            article = services.add_article(
+            article = article_service.add_article(
                 title=request.json['title'],
                 description=request.json['description'],
                 content=request.json['content'],
@@ -21,5 +21,5 @@ class ArticlesAPI(MethodView):
 
             return jsonify(message=article), 201
 
-        except (model.CategoryNotFound, model.DuplicateTitle) as e:
+        except (exceptions.CategoryNotFound, exceptions.DuplicateTitle) as e:
             return jsonify(message=str(e)), 404

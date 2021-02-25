@@ -1,6 +1,6 @@
 import pytest
 
-from src.articles.domain import credential
+from src.articles.domain.entities import credential
 
 
 class TestFactory:

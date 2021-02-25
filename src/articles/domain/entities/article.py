@@ -1,26 +1,8 @@
-from dataclasses import dataclass
 from datetime import datetime
-from enum import Enum
 from typing import List
 
-
-class Category(Enum):
-    GUIDE = 1
-    CULTURE = 2
-    EXERCISES = 3
-
-
-class CategoryNotFound(Exception):
-    pass
-
-
-class DuplicateTitle(Exception):
-    pass
-
-
-@dataclass
-class Tag:
-    name: str
+from src.articles.domain.entities.category import Category
+from src.articles.domain.entities.tag import Tag
 
 
 class Article:

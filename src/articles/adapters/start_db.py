@@ -5,14 +5,14 @@ from sqlalchemy.exc import OperationalError, ProgrammingError
 from sqlalchemy.orm import sessionmaker
 
 from src.articles import config
-from src.articles.adapters.orm import metadata, articles, start_mappers
-from src.articles.domain import model
+from src.articles.adapters.orm import metadata, start_mappers
+from src.articles.domain.entities import article
 
 
 def tables_exist():
     session = sessionmaker(bind=create_engine(config.get_postgres_uri()))()
     try:
-        session.execute(f'SELECT 1 FROM {articles.name};')
+        session.execute(f'SELECT 1 FROM articles;')
         return True
     except ProgrammingError:
         return False
@@ -21,6 +21,7 @@ def tables_exist():
 def create_tables():
     if not tables_exist():
         metadata.create_all(create_engine(config.get_postgres_uri()))
+        populate()
 
 
 def wait_for_postgres_to_come_up():
@@ -39,7 +40,8 @@ def wait_for_postgres_to_come_up():
 
 def populate():
     start_mappers()
-    articles = [
+
+    _articles = [
         {
             'title': 'Artigo 1',
             'description': 'Descrição memorável',
@@ -61,12 +63,13 @@ def populate():
 
     session = sessionmaker(bind=create_engine(config.get_postgres_uri()))()
 
-    for article in articles:
-        session.add(model.Article(
-            title=article['title'],
-            description=article['description'],
-            content=article['content'],
-            tags=[]
-        ))
+    for _article in _articles:
+        session.add(
+            article.Article(
+                title=_article['title'],
+                description=_article['description'],
+                content=_article['content'],
+                tags=[]
+            ))
 
         session.commit()

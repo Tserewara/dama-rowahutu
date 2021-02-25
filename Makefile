@@ -5,7 +5,7 @@ up: build
 	docker-compose up -d
 
 test: build up
-	docker-compose exec -T app pytest tests
+	docker-compose exec -T app pytest
 
 unit-tests: up
 	docker-compose exec -T app pytest tests/unit

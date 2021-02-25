@@ -1,12 +1,12 @@
-from src.articles.domain import model
+from src.articles.domain.entities import category, article, tag
 
 
 def tag_factory():
     return [
-        model.Tag('verbos'),
-        model.Tag('vocabulario'),
-        model.Tag('subtantivo'),
-        model.Tag('gramatica')
+        tag.Tag('verbos'),
+        tag.Tag('vocabulario'),
+        tag.Tag('subtantivo'),
+        tag.Tag('gramatica')
     ]
 
 
@@ -15,26 +15,26 @@ def test_can_create_a_bunch_of_tags():
 
 
 def test_can_create_guide_article():
-    article = model.Article(
+    _article = article.Article(
         title="Bem-vindos",
         description="Post de boas vindas",
         content="Este é o dama rowahutu!",
-        category=model.Category.GUIDE,
+        category=category.Category.GUIDE,
         tags=tag_factory(),
 
     )
 
-    assert article.category == model.Category.GUIDE
+    assert _article.category == category.Category.GUIDE
 
 
 def test_can_create_short_article_with_timestamp():
-    article = model.Article(
+    _article = article.Article(
         title="Bem-vindos",
         description="Post de boas vindas",
         content="Este é o dama rowahutu!",
-        category=model.Category.GUIDE,
+        category=category.Category.GUIDE,
         tags=tag_factory(),
 
     )
 
-    assert article.created_on
+    assert _article.created_on

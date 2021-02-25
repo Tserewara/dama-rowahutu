@@ -1,74 +1,76 @@
-from src.articles.domain import model, credential
+from src.articles.domain.entities import credential, category, article, tag
 
 
 def tag_factory():
     return [
-        model.Tag('verbos'),
-        model.Tag('vocabulario'),
-        model.Tag('subtantivo'),
-        model.Tag('gramatica')
+        tag.Tag('verbos'),
+        tag.Tag('vocabulario'),
+        tag.Tag('subtantivo'),
+        tag.Tag('gramatica')
     ]
 
 
 def test_orm_can_save_article(session):
-    article = model.Article(
+
+    _article = article.Article(
         title='An article',
         description='A great description',
         content='This is a useful article',
         tags=tag_factory(),
-        category=model.Category.GUIDE
+        category=category.Category.GUIDE
     )
 
-    session.add(article)
+    session.add(_article)
     session.commit()
 
-    assert session.query(model.Article).first().title == 'An article'
+    assert session.query(article.Article).first().title == 'An article'
 
 
 def test_orm_deletes_a_tag_used_in_article(session):
-    article = model.Article(
+
+    _article = article.Article(
         title='An article',
         description='A great description',
         content='This is a useful article',
         tags=tag_factory(),
-        category=model.Category.GUIDE
+        category=category.Category.GUIDE
     )
 
-    session.add(article)
+    session.add(_article)
     session.commit()
 
-    tag = session.query(model.Tag).first()
+    _tag = session.query(tag.Tag).first()
 
-    session.delete(tag)
+    session.delete(_tag)
     session.commit()
 
-    assert len(session.query(model.Article).first().tags) == 3
+    assert len(session.query(article.Article).first().tags) == 3
 
 
 def test_orm_saves_date_of_article(session):
-    article = model.Article(
+
+    _article = article.Article(
         title='An article',
         description='A great description',
         content='This is a useful article',
         tags=tag_factory(),
-        category=model.Category.GUIDE
+        category=category.Category.GUIDE
     )
 
-    session.add(article)
+    session.add(_article)
     session.commit()
 
-    assert session.query(model.Article).first().created_on
+    assert session.query(article.Article).first().created_on
 
 
-class TestCredential:
+def test_can_save_credential(session):
 
-    def test_can_save_credential(self, session):
-        my_credential = credential.Credential.factory(
-            username='tserewara',
-            password='password',
-        )
+    _credential = credential.Credential.factory(
+        username='tserewara',
+        password='password',
+    )
 
-        session.add(my_credential)
-        session.commit()
+    session.add(_credential)
+    session.commit()
 
-        assert session.query(credential.Credential).first() == my_credential
+    assert session.query(credential.Credential).first() == _credential
