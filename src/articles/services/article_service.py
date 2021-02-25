@@ -1,5 +1,4 @@
-from src.articles.domain import exceptions
-from src.articles.domain.entities import article
+from src.articles.domain.entities import article, exceptions
 from src.articles.services import unit_of_work, category_service, tag_service
 
 

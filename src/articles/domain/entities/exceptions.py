@@ -4,3 +4,7 @@ class CategoryNotFound(Exception):
 
 class DuplicateTitle(Exception):
     pass
+
+
+class CredentialValueError(Exception):
+    pass

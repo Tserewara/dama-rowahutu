@@ -1,12 +1,12 @@
 import pytest
 
-from src.articles.domain.entities import credential
+from src.articles.domain.entities import credential, exceptions
 
 
 class TestFactory:
 
     def test_raises_credential_value_error_when_has_no_username(self):
-        with pytest.raises(credential.CredentialValueError,
+        with pytest.raises(exceptions.CredentialValueError,
                            match='All arguments are required'):
             credential.Credential.factory(None, 'password')
 

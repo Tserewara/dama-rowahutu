@@ -1,3 +1,6 @@
+import pytest
+
+from src.articles.domain.entities import exceptions
 from src.articles.services import credential_service
 from tests.unit.test_services.fakes import FakeUnitOfWork
 
@@ -5,15 +8,15 @@ from tests.unit.test_services.fakes import FakeUnitOfWork
 def test_service_can_create_credential():
     uow = FakeUnitOfWork()
 
-    my_credential = ('Tserewara', 'password')
+    _credential = ('Tserewara', 'password')
 
     result = credential_service.add_credential(
-        my_credential[0],
-        my_credential[1],
+        _credential[0],
+        _credential[1],
         uow
     )
 
-    assert result == f'Credential created for {my_credential[0]}'
+    assert result == f'Credential created for {_credential[0]}'
 
 
 def test_lists_all_credentials():
@@ -31,27 +34,25 @@ def test_lists_all_credentials():
     assert len(credential_service.list_credentials(uow)) == 3
 
 
-def test_returns_credential_by_username():
-    uow = FakeUnitOfWork()
+class TestLogin:
 
-    my_credential = ('Tserewara', 'password')
+    def test_returns_true_when_logging_is_successful(self):
+        uow = FakeUnitOfWork()
 
-    credential_service.add_credential(my_credential[0], my_credential[1], uow)
+        _credential = ('Tserewara', 'password')
 
-    result_credential = credential_service.get_credential_by_username(
-        'Tserewara', uow)
+        credential_service.add_credential(_credential[0], _credential[1], uow)
 
-    assert result_credential.username == my_credential[0]
+        assert credential_service.login('Tserewara', 'password', uow)
 
+    def test_raises_exception_when_logging_with_invalid_username(self):
+        uow = FakeUnitOfWork()
 
-def test_returns_true_when_credential_is_equal():
-    uow = FakeUnitOfWork()
+        _credential = ('Tserewara', 'password')
 
-    my_credential = ('Tserewara', 'password')
+        credential_service.add_credential(_credential[0], _credential[1], uow)
 
-    credential_service.add_credential(my_credential[0], my_credential[1], uow)
+        with pytest.raises(exceptions.CredentialValueError,
+                           match='Invalid credential. Username not found'):
 
-    result_credential = credential_service.get_credential_by_username(
-        'Tserewara', uow)
-
-    assert result_credential.verify_password('password')
+            credential_service.login('John', 'password', uow)

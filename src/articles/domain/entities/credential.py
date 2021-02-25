@@ -1,10 +1,7 @@
 from __future__ import annotations
 import abc
 from typing import Optional
-
-
-class CredentialValueError(Exception):
-    pass
+from . import exceptions
 
 
 class AbstractCredential(abc.ABC):
@@ -57,9 +54,8 @@ class Credential(AbstractCredential):
             password: Optional[str] = None,
             active: Optional[bool] = True
     ) -> AbstractCredential:
-
         if not username:
-            raise CredentialValueError('All arguments are required')
+            raise exceptions.CredentialValueError('All arguments are required')
 
         return cls(
             username=username,

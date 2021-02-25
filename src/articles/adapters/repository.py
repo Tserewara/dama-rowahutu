@@ -1,4 +1,5 @@
 import abc
+from typing import List
 
 from src.articles.domain.entities import credential, article
 
@@ -13,6 +14,10 @@ class AbstractRepository(abc.ABC):
     def list(self):
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def get_one_by(self, value: str):
+        raise NotImplementedError
+
 
 class SqlAlchemyRepositoryArticles(AbstractRepository):
     def __init__(self, session):
@@ -23,6 +28,9 @@ class SqlAlchemyRepositoryArticles(AbstractRepository):
 
     def list(self):
         return self.session.query(article.Article).all()
+
+    def get_one_by(self, value: str):
+        pass
 
 
 class SqlAlchemyRepositoryTags(AbstractRepository):
@@ -35,6 +43,9 @@ class SqlAlchemyRepositoryTags(AbstractRepository):
     def list(self):
         return self.session.query(article.Article).all()
 
+    def get_one_by(self, value: str):
+        pass
+
 
 class SqlAlchemyRepositoryCredentials(AbstractRepository):
     def __init__(self, session):
@@ -43,5 +54,9 @@ class SqlAlchemyRepositoryCredentials(AbstractRepository):
     def add(self, _credential: credential.AbstractCredential):
         self.session.add(_credential)
 
-    def list(self):
+    def list(self) -> List[credential.Credential]:
         return self.session.query(credential.Credential).all()
+
+    def get_one_by(self, username: str) -> credential.Credential:
+        return self.session.query(credential.Credential).filter_by(
+            username=username).first()

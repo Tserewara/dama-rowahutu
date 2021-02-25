@@ -1,11 +1,10 @@
-from typing import Union
+from typing import List
 
-from src.articles.domain.entities import credential
+from src.articles.domain.entities import credential, exceptions
 from src.articles.services import unit_of_work
 
 
 def add_credential(
-
         username: str,
         password: str,
         uow: unit_of_work.AbstractUnitOfWork) -> str:
@@ -16,26 +15,28 @@ def add_credential(
         )
 
         uow.credentials.add(new_credential)
+        uow.commit()
 
     return f'Credential created for {username}'
 
 
-def list_credentials(uow: unit_of_work.AbstractUnitOfWork):
+def list_credentials(
+        uow: unit_of_work.AbstractUnitOfWork
+) -> List[credential.Credential]:
     with uow:
         all_credentials = uow.credentials.list()
 
     return all_credentials
 
 
-def get_credential_by_username(
-        username: str,
-        uow: unit_of_work.AbstractUnitOfWork
-) -> Union[credential.Credential, None]:
+def login(username: str, password: str, uow):
+
     with uow:
 
-        try:
-            return next(a_credential for a_credential in
-                        list_credentials(
-                            uow) if a_credential.username == username)
-        except StopIteration:
-            return None
+        _credential = uow.credentials.get_one_by(username)
+
+        if not _credential:
+            raise exceptions.CredentialValueError(
+                'Invalid credential. Username not found.')
+
+        return _credential.verify_password(password)

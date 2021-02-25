@@ -1,6 +1,6 @@
 import pytest
 
-from src.articles.domain import exceptions
+from src.articles.domain.entities import exceptions
 from src.articles.services import article_service
 from tests.unit.test_services.fakes import FakeUnitOfWork
 
