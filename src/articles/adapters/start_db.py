@@ -12,7 +12,7 @@ from src.articles.domain.entities import article
 def tables_exist():
     session = sessionmaker(bind=create_engine(config.get_postgres_uri()))()
     try:
-        session.execute(f'SELECT 1 FROM articles;')
+        session.execute('SELECT 1 FROM articles;')
         return True
     except ProgrammingError:
         return False
@@ -21,7 +21,6 @@ def tables_exist():
 def create_tables():
     if not tables_exist():
         metadata.create_all(create_engine(config.get_postgres_uri()))
-        populate()
 
 
 def wait_for_postgres_to_come_up():
