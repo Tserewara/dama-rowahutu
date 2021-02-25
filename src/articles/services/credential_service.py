@@ -39,4 +39,8 @@ def login(username: str, password: str, uow):
             raise exceptions.CredentialValueError(
                 'Invalid credential. Username not found.')
 
-        return _credential.verify_password(password)
+        if not _credential.verify_password(password):
+            raise exceptions.CredentialValueError(
+                'Password wrong!')
+
+        return 'Logging successful!'

@@ -30,7 +30,6 @@ class CredentialsAPI(MethodView):
 
     @staticmethod
     def post():
-
         credential_service.add_credential(
             username=request.json['username'],
             password=request.json['password'],
@@ -47,15 +46,13 @@ class LoginAPI(MethodView):
 
         try:
 
-            if credential_service.login(
+            result = credential_service.login(
                 username=request.json['username'],
                 password=request.json['password'],
                 uow=unit_of_work.SqlAlchemyUnitOfWork()
-            ):
+            )
 
-                return jsonify({
-                    'message': 'Logging successful!'
-                }), 200
+            return jsonify({'message': result}), 200
 
         except exceptions.CredentialValueError as e:
 
