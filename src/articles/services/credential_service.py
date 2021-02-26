@@ -43,4 +43,4 @@ def login(username: str, password: str, uow: unit_of_work.AbstractUnitOfWork):
             raise exceptions.CredentialValueError(
                 'Password wrong!')
 
-        return 'Logging successful!'
+        return _credential.username

@@ -2,14 +2,19 @@ from flask import request, jsonify
 from flask.views import MethodView
 
 from src.articles.domain.entities import exceptions
+from src.articles.entrypoints.authentication_decorator import (
+    authentication_required)
 from src.articles.services import article_service, unit_of_work
 
 
 class ArticlesAPI(MethodView):
 
+    decorators = [authentication_required]
+
     @staticmethod
     def post():
         try:
+
             article = article_service.add_article(
                 title=request.json['title'],
                 description=request.json['description'],

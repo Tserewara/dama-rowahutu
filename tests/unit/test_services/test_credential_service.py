@@ -43,7 +43,12 @@ class TestLogin:
 
         credential_service.add_credential(_credential[0], _credential[1], uow)
 
-        assert credential_service.login('Tserewara', 'password', uow)
+        username = credential_service.login(
+            'Tserewara',
+            'password',
+            uow)
+
+        assert username == 'Tserewara'
 
     def test_raises_exception_when_logging_with_invalid_username(self):
         uow = FakeUnitOfWork()
