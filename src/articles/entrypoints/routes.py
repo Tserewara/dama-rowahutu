@@ -1,4 +1,6 @@
-from src.articles.entrypoints.rest import ArticlesAPI, CredentialsAPI, LoginAPI
+from src.articles.entrypoints.views.login_view import LoginAPI
+from src.articles.entrypoints.views.credentials_view import CredentialsAPI
+from src.articles.entrypoints.views.articles_view import ArticlesAPI
 
 
 def register_routes(app):
