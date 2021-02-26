@@ -29,7 +29,7 @@ def list_credentials(
     return all_credentials
 
 
-def login(username: str, password: str, uow):
+def login(username: str, password: str, uow: unit_of_work.AbstractUnitOfWork):
 
     with uow:
 

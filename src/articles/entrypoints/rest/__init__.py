@@ -56,6 +56,4 @@ class LoginAPI(MethodView):
 
         except exceptions.CredentialValueError as e:
 
-            return jsonify({
-                'message': f'{str(e)}'
-            }), 401
+            return jsonify({'message': f'{str(e)}'}), 401
