@@ -4,9 +4,13 @@ RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
 
 ARG POSTGRES_PASSWORD
 
+ARG SECRET_KEY
+
 ENV POSTGRES_HOST=damarowahutu-db
 
 ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+
+ENV SECRET_KEY=$SECRET_KEY
 
 WORKDIR dama-rowahutu/
 

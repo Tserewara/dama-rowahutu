@@ -1,11 +1,12 @@
 build:
-	docker-compose build --build-arg POSTGRES_PASSWORD=$(POSTGRES_PASSWORD)
+	docker-compose build --build-arg POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) --build-arg SECRET_KEY=$(SECRET_KEY)
 
 up: build
 	docker-compose up -d
 
 test: build up
 	docker-compose exec -T app pytest
+	make down
 
 unit-tests: up
 	docker-compose exec -T app pytest tests/unit
@@ -23,3 +24,7 @@ down:
 	docker-compose down --remove-orphans
 
 all: down build up test
+
+local_test:
+	docker-compose build --build-arg POSTGRES_PASSWORD=tserewara --build-arg SECRET_KEY=tserewara
+	docker-compose exec app pytest
