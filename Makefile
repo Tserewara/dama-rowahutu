@@ -27,4 +27,5 @@ all: down build up test
 
 local_test:
 	docker-compose build --build-arg POSTGRES_PASSWORD=tserewara --build-arg SECRET_KEY=tserewara
+	docker-compose up -d
 	docker-compose exec app pytest
