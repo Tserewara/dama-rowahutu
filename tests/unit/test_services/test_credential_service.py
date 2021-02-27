@@ -19,21 +19,6 @@ def test_service_can_create_credential():
     assert result == f'Credential created for {_credential[0]}'
 
 
-def test_lists_all_credentials():
-    uow = FakeUnitOfWork()
-
-    my_credentials = [
-        ('User_A', 'password1'),
-        ('User_B', 'password2'),
-        ('User_C', 'password3'),
-    ]
-
-    for item in my_credentials:
-        credential_service.add_credential(item[0], item[1], uow)
-
-    assert len(credential_service.list_credentials(uow)) == 3
-
-
 class TestLogin:
 
     def test_returns_true_when_logging_is_successful(self):
@@ -43,7 +28,7 @@ class TestLogin:
 
         credential_service.add_credential(_credential[0], _credential[1], uow)
 
-        username = credential_service.login(
+        username = credential_service.authenticate(
             'Tserewara',
             'password',
             uow)
@@ -60,4 +45,4 @@ class TestLogin:
         with pytest.raises(exceptions.CredentialValueError,
                            match='Invalid credential. Username not found'):
 
-            credential_service.login('John', 'password', uow)
+            credential_service.authenticate('John', 'password', uow)

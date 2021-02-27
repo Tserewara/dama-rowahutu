@@ -1,5 +1,3 @@
-from typing import List
-
 from src.articles.domain.entities import credential, exceptions
 from src.articles.services import unit_of_work
 
@@ -20,16 +18,10 @@ def add_credential(
     return f'Credential created for {username}'
 
 
-def list_credentials(
-        uow: unit_of_work.AbstractUnitOfWork
-) -> List[credential.Credential]:
-    with uow:
-        all_credentials = uow.credentials.list()
-
-    return all_credentials
-
-
-def login(username: str, password: str, uow: unit_of_work.AbstractUnitOfWork):
+def authenticate(
+        username: str,
+        password: str,
+        uow: unit_of_work.AbstractUnitOfWork) -> str:
 
     with uow:
 

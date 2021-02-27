@@ -1,6 +1,7 @@
-from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey, \
-    Enum, DateTime, func, Boolean
+from sqlalchemy import (MetaData, Table, Column, Integer, String, ForeignKey,
+                        Enum, DateTime, func, Boolean)
 from sqlalchemy.orm import mapper, relationship
+
 from src.articles.domain.entities import credential, category, article, tag
 
 metadata = MetaData()

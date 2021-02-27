@@ -1,8 +1,6 @@
 from flask import request, jsonify
 from flask.views import MethodView
 
-from src.articles.entrypoints.authentication_decorator import (
-    authentication_required)
 from src.articles.services import credential_service, unit_of_work
 
 

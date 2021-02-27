@@ -5,14 +5,14 @@ from src.articles.domain.entities import exceptions
 from src.articles.services import credential_service, unit_of_work
 
 
-class LoginAPI(MethodView):
+class AuthenticationAPI(MethodView):
 
     @staticmethod
     def post():
 
         try:
 
-            username = credential_service.login(
+            username = credential_service.authenticate(
                 username=request.json['username'],
                 password=request.json['password'],
                 uow=unit_of_work.SqlAlchemyUnitOfWork()
