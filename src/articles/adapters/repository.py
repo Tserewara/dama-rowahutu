@@ -15,7 +15,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_one_by(self, value: str):
+    def get(self, value: str):
         raise NotImplementedError
 
 
@@ -29,8 +29,9 @@ class SqlAlchemyRepositoryArticles(AbstractRepository):
     def list(self):
         return self.session.query(article.Article).all()
 
-    def get_one_by(self, value: str):
-        pass
+    def get(self, value: str):
+        return self.session.query(article.Article).filter_by(
+            title=value).first()
 
 
 class SqlAlchemyRepositoryTags(AbstractRepository):
@@ -43,7 +44,7 @@ class SqlAlchemyRepositoryTags(AbstractRepository):
     def list(self):
         return self.session.query(article.Article).all()
 
-    def get_one_by(self, value: str):
+    def get(self, value: str):
         pass
 
 
@@ -57,6 +58,6 @@ class SqlAlchemyRepositoryCredentials(AbstractRepository):
     def list(self) -> List[credential.Credential]:
         return self.session.query(credential.Credential).all()
 
-    def get_one_by(self, username: str) -> credential.Credential:
+    def get(self, username: str) -> credential.Credential:
         return self.session.query(credential.Credential).filter_by(
             username=username).first()

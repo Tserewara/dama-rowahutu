@@ -12,8 +12,10 @@ class FakeRepositoryArticles(repository.AbstractRepository):
     def list(self):
         return self._articles
 
-    def get_one_by(self, value: str):
-        pass
+    def get(self, value: str):
+        for item in self.list():
+            if item.title == value:
+                return item
 
 
 class FakeRepositoryTags(repository.AbstractRepository):
@@ -26,7 +28,7 @@ class FakeRepositoryTags(repository.AbstractRepository):
     def list(self):
         return self._tags
 
-    def get_one_by(self, value: str):
+    def get(self, value: str):
         pass
 
 
@@ -40,7 +42,7 @@ class FakeRepositoryCredentials(repository.AbstractRepository):
     def list(self):
         return self._credentials
 
-    def get_one_by(self, value: str):
+    def get(self, value: str):
         for item in self.list():
             if item.username == value:
                 return item

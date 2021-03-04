@@ -1,3 +1,7 @@
+class ArticleNotFound(Exception):
+    pass
+
+
 class CategoryNotFound(Exception):
     pass
 

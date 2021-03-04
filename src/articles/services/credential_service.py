@@ -25,7 +25,7 @@ def authenticate(
 
     with uow:
 
-        _credential = uow.credentials.get_one_by(username)
+        _credential = uow.credentials.get(username)
 
         if not _credential:
             raise exceptions.CredentialValueError(
