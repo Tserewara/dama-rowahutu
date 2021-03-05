@@ -1,4 +1,4 @@
-from src.articles.domain.entities import article, exceptions
+from src.articles.domain.entities import article, exceptions, tag
 from src.articles.services import unit_of_work, category_service, tag_service
 
 
@@ -37,7 +37,10 @@ def add_article(
 
 
 def update_article(
-        article_title: str, uow: unit_of_work.AbstractUnitOfWork, **kwargs):
+        article_title: str,
+        uow: unit_of_work.AbstractUnitOfWork,
+        **kwargs,
+):
     with uow:
 
         _article = uow.articles.get(value=article_title)
@@ -46,24 +49,7 @@ def update_article(
             raise exceptions.ArticleNotFound('Article not found.')
 
         for attribute in kwargs:
-            if not hasattr(_article, attribute):
-                raise AttributeError(f'Article has no attribute {attribute}')
-
-        if 'title' in kwargs:
-            setattr(_article, 'title', kwargs['title'])
-
-        if 'description' in kwargs:
-            setattr(_article, 'description', kwargs['description'])
-
-        if 'content' in kwargs:
-            setattr(_article, 'content', kwargs['content'])
-
-        if 'category' in kwargs:
-            setattr(_article, 'category', kwargs['category'])
-
-        if 'tags' in kwargs:
-            setattr(_article, 'tags', tag_service.get_valid_tags_by_name(
-                kwargs['tags'], uow))
+            update_attribute(_article, attribute, kwargs, uow)
 
         uow.commit()
 
@@ -82,7 +68,20 @@ def title_is_duplicate(
             return False
 
 
-def _update_article_tags(_article, _tags, uow):
-    valid_tags = tag_service.get_valid_tags_by_name(_tags, uow)
+def update_attribute(
+        _article,
+        attribute,
+        _kwargs,
+        uow: unit_of_work.AbstractUnitOfWork
+):
 
-    setattr(_article, 'tags', valid_tags)
+    if not hasattr(_article, attribute):
+        raise AttributeError(f'Article has no attribute {attribute}')
+
+    setattr(_article, attribute, _kwargs[attribute])
+
+    if attribute == 'tags':
+        _valid_tags = tag_service.get_valid_tags_by_name(
+            _kwargs['tags'], uow)
+
+        _article.tags = _valid_tags

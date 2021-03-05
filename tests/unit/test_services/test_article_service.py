@@ -6,7 +6,6 @@ from tests.unit.test_services.fakes import FakeUnitOfWork
 
 
 def create_tags(uow):
-
     _tags = [tag.Tag('verbos'), tag.Tag('substantivos'), tag.Tag('dicas')]
 
     for _tag in _tags:
@@ -15,7 +14,6 @@ def create_tags(uow):
 
 
 def test_service_adds_an_article():
-
     uow = FakeUnitOfWork()
 
     create_tags(uow)
@@ -138,6 +136,10 @@ def test_can_update_many_article_attributes_at_once():
 
     article_service.add_article(**article, uow=uow)
 
+    _article = uow.articles.get('An article')
+
+    assert _article.tags == [tag.Tag('verbos'), tag.Tag('substantivos')]
+
     article_service.update_article(
         article_title='An article',
         description='A new description',
@@ -146,7 +148,7 @@ def test_can_update_many_article_attributes_at_once():
         tags=['dicas'],
         uow=uow)
 
-    updated = uow.articles.get(value='An article')
+    updated = uow.articles.get('An article')
 
     assert updated.description == 'A new description'
     assert updated.content == 'A new content'
@@ -169,14 +171,16 @@ def test_can_update_tags_of_article():
 
     article_service.add_article(**article, uow=uow)
 
-    updated = uow.articles.get(value='An article')
+    _article = uow.articles.get(value='An article')
 
-    article_service.update_article(
-        article_title='An article',
-        tags=['verbos'],
+    article_service.update_attribute(
+        _article,
+        attribute='tags',
+        _kwargs={'tags': ['verbos']},
         uow=uow
     )
 
+    updated = uow.articles.get(value='An article')
     assert updated.tags == [tag.Tag('verbos')]
 
 

@@ -29,7 +29,9 @@ class FakeRepositoryTags(repository.AbstractRepository):
         return self._tags
 
     def get(self, value: str):
-        pass
+        for item in self.list():
+            if item.name == value:
+                return item
 
 
 class FakeRepositoryCredentials(repository.AbstractRepository):
