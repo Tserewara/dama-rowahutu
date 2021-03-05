@@ -224,3 +224,29 @@ def test_raises_attribute_error_when_updating_non_existent_attribute():
             uow=uow,
             wrong_attribute='Another article'
         )
+
+
+def test_deletes_an_article():
+    article = {
+        'title': 'An article',
+        'description': 'A great description',
+        'content': 'This is a useful article',
+        'category_id': 1,
+        'tags': ['verbos', 'substantivos'],
+    }
+
+    uow = FakeUnitOfWork()
+
+    article_service.add_article(**article, uow=uow)
+
+    article_service.delete_article('An article', uow)
+
+    assert uow.articles.list() == []
+
+
+def test_raises_article_not_found_error_when_deleting_non_existent_article():
+
+    uow = FakeUnitOfWork()
+
+    with pytest.raises(exceptions.ArticleNotFound):
+        article_service.delete_article('An article', uow)

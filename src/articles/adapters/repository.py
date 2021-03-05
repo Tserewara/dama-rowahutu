@@ -18,6 +18,9 @@ class AbstractRepository(abc.ABC):
     def get(self, value: str):
         raise NotImplementedError
 
+    def delete(self, entity: article.Article):
+        raise NotImplementedError
+
 
 class SqlAlchemyRepositoryArticles(AbstractRepository):
     def __init__(self, session):
@@ -32,6 +35,9 @@ class SqlAlchemyRepositoryArticles(AbstractRepository):
     def get(self, value: str):
         return self.session.query(article.Article).filter_by(
             title=value).first()
+
+    def delete(self, entity: article.Article):
+        self.session.delete(entity)
 
 
 class SqlAlchemyRepositoryTags(AbstractRepository):

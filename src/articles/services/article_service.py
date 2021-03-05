@@ -56,6 +56,20 @@ def update_article(
     return article_title
 
 
+def delete_article(article_title, uow: unit_of_work.AbstractUnitOfWork) -> str:
+    with uow:
+        _article = uow.articles.get(article_title)
+
+        if not _article:
+            raise exceptions.ArticleNotFound('Article not found.')
+
+        uow.articles.delete(_article)
+
+        uow.commit()
+
+    return article_title
+
+
 def title_is_duplicate(
         title: str,
         uow: unit_of_work.AbstractUnitOfWork):
@@ -74,7 +88,6 @@ def update_attribute(
         _kwargs,
         uow: unit_of_work.AbstractUnitOfWork
 ):
-
     if not hasattr(_article, attribute):
         raise AttributeError(f'Article has no attribute {attribute}')
 

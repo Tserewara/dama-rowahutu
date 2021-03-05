@@ -17,6 +17,9 @@ class FakeRepositoryArticles(repository.AbstractRepository):
             if item.title == value:
                 return item
 
+    def delete(self, entity):
+        self._articles.remove(entity)
+
 
 class FakeRepositoryTags(repository.AbstractRepository):
     def __init__(self):
@@ -33,6 +36,9 @@ class FakeRepositoryTags(repository.AbstractRepository):
             if item.name == value:
                 return item
 
+    def delete(self, entity):
+        self._tags.remove(entity)
+
 
 class FakeRepositoryCredentials(repository.AbstractRepository):
     def __init__(self):
@@ -48,6 +54,9 @@ class FakeRepositoryCredentials(repository.AbstractRepository):
         for item in self.list():
             if item.username == value:
                 return item
+
+    def delete(self, entity):
+        self._credentials.remove(entity)
 
 
 class FakeUnitOfWork(unit_of_work.AbstractUnitOfWork):
