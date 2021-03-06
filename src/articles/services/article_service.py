@@ -72,11 +72,16 @@ def delete_article(article_title, uow: unit_of_work.AbstractUnitOfWork) -> str:
 
 def title_is_duplicate(
         title: str,
-        uow: unit_of_work.AbstractUnitOfWork):
+        uow: unit_of_work.AbstractUnitOfWork,
+        article_to_update: article.Article = None
+):
     with uow:
 
+        _articles = [_article for _article in uow.articles.list() if
+                     _article != article_to_update]
+
         try:
-            return next(_article.title for _article in uow.articles.list() if
+            return next(_article for _article in _articles if
                         _article.title == title) is not None
         except StopIteration:
             return False
@@ -92,6 +97,15 @@ def update_attribute(
         raise AttributeError(f'Article has no attribute {attribute}')
 
     setattr(_article, attribute, _kwargs[attribute])
+
+    if attribute == 'title':
+        if title_is_duplicate(
+                _kwargs['title'],
+                article_to_update=_article,
+                uow=uow):
+            raise exceptions.DuplicateTitle('Title is duplicate')
+
+        setattr(_article, attribute, _kwargs[attribute])
 
     if attribute == 'tags':
         _valid_tags = tag_service.get_valid_tags_by_name(
