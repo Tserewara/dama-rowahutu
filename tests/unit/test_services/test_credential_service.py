@@ -19,6 +19,48 @@ def test_service_can_create_credential():
     assert result == f'Credential created for {_credential[0]}'
 
 
+def test_service_can_update_password():
+    uow = FakeUnitOfWork()
+
+    _credential = ('Tserewara', 'password')
+
+    credential_service.add_credential(
+        _credential[0],
+        _credential[1],
+        uow
+    )
+
+    result = credential_service.update_credential(
+        'Tserewara',
+        new_password='new@password',
+        uow=uow
+    )
+
+    assert result == 'Credential updated for user Tserewara'
+    assert credential_service.authenticate('Tserewara', 'new@password', uow)
+
+
+def test_service_can_update_username():
+    uow = FakeUnitOfWork()
+
+    _credential = ('Tserewara', 'password')
+
+    credential_service.add_credential(
+        _credential[0],
+        _credential[1],
+        uow
+    )
+
+    result = credential_service.update_credential(
+        'Tserewara',
+        new_username='Tsere',
+        uow=uow
+    )
+
+    assert result == 'Credential updated for user Tserewara'
+    assert credential_service.authenticate('Tsere', 'password', uow)
+
+
 class TestLogin:
 
     def test_returns_true_when_logging_is_successful(self):

@@ -1,7 +1,7 @@
 import abc
 from typing import List
 
-from src.articles.domain.entities import credential, article
+from src.articles.domain.entities import credential, article, tag
 
 
 class AbstractRepository(abc.ABC):
@@ -44,14 +44,17 @@ class SqlAlchemyRepositoryTags(AbstractRepository):
     def __init__(self, session):
         self.session = session
 
-    def add(self, _article: article.Article):
-        self.session.add(_article)
+    def add(self, _tag: tag.Tag):
+        self.session.add(_tag)
 
     def list(self):
-        return self.session.query(article.Article).all()
+        return self.session.query(tag.Tag).all()
 
     def get(self, value: str):
         pass
+
+    def delete(self, entity: tag.Tag):
+        self.session.delete(entity)
 
 
 class SqlAlchemyRepositoryCredentials(AbstractRepository):
@@ -67,3 +70,6 @@ class SqlAlchemyRepositoryCredentials(AbstractRepository):
     def get(self, username: str) -> credential.Credential:
         return self.session.query(credential.Credential).filter_by(
             username=username).first()
+
+    def delete(self, entity: credential.Credential):
+        self.session.delete(entity)
