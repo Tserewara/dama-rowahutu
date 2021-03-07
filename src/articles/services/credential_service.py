@@ -56,9 +56,20 @@ def get_credential(username: str, uow: unit_of_work.AbstractUnitOfWork):
     _credential = uow.credentials.get(value=username)
 
     if not _credential:
-        raise exceptions.CredentialValueError('Username is already taken.')
+        raise exceptions.CredentialValueError('Credential not found')
 
     return _credential
+
+
+def delete_credential(username: str, uow: unit_of_work.AbstractUnitOfWork):
+
+    with uow:
+
+        _credential = get_credential(username, uow)
+
+        uow.credentials.delete(_credential)
+
+        uow.commit()
 
 
 def authenticate(

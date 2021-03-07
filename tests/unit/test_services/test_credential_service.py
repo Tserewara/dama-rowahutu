@@ -61,6 +61,30 @@ def test_service_can_update_username():
     assert credential_service.authenticate('Tsere', 'password', uow)
 
 
+def test_can_delete_credential():
+    uow = FakeUnitOfWork()
+
+    _credential = ('Tserewara', 'password')
+
+    credential_service.add_credential(
+        _credential[0],
+        _credential[1],
+        uow
+    )
+
+    credential_service.delete_credential('Tserewara', uow)
+
+    assert uow.credentials.list() == []
+
+
+def test_raises_credential_value_error_when_deleting_credential_non_existent():
+    uow = FakeUnitOfWork()
+
+    with pytest.raises(exceptions.CredentialValueError,
+                       match='Credential not found'):
+        credential_service.delete_credential('Tserewara', uow)
+
+
 class TestLogin:
 
     def test_returns_true_when_logging_is_successful(self):
@@ -86,5 +110,4 @@ class TestLogin:
 
         with pytest.raises(exceptions.CredentialValueError,
                            match='Invalid credential. Username not found'):
-
             credential_service.authenticate('John', 'password', uow)
