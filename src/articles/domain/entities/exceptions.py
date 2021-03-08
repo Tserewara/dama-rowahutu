@@ -12,3 +12,7 @@ class DuplicateTitle(Exception):
 
 class CredentialValueError(Exception):
     pass
+
+
+class EncryptorTypeError(Exception):
+    pass
