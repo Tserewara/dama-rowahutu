@@ -16,3 +16,7 @@ class CredentialValueError(Exception):
 
 class EncryptorTypeError(Exception):
     pass
+
+
+class PasswordStrengthError(Exception):
+    pass

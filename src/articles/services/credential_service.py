@@ -6,11 +6,14 @@ def add_credential(
         username: str,
         password: str,
         uow: unit_of_work.AbstractUnitOfWork) -> str:
+
     with uow:
+
         new_credential = credential.Credential.factory(
             username=username,
-            password=password
         )
+
+        new_credential.set_password(password)
 
         uow.credentials.add(new_credential)
         uow.commit()
@@ -34,16 +37,12 @@ def update_credential(
         _credential.username = new_username
 
     def update_password():
-        _credential.password = new_password
+        _credential.set_password(new_password)
 
     if new_username:
         update_username()
 
     if new_password:
-        update_password()
-
-    if new_username and new_password:
-        update_username()
         update_password()
 
     uow.commit()

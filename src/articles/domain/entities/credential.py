@@ -2,6 +2,8 @@ from __future__ import annotations
 import abc
 from typing import Optional
 from . import exceptions
+from .encryptor import Encryptor, AbstractEncryptor
+from ..values.password import Password
 
 
 class AbstractCredential(abc.ABC):
@@ -36,16 +38,21 @@ class Credential(AbstractCredential):
     def __init__(
             self,
             username: str,
-            password: Optional[str] = None,
-            active: Optional[bool] = True
+            password: str = None,
+            encryptor: AbstractEncryptor = Encryptor,
+            active: bool = True
     ):
         self.username = username
-        self.password = password
+        self._password = Password(encryptor, password)
         self.active = active
+
+    @property
+    def password(self):
+        return self._password.value
 
     def __eq__(self, other: Credential) -> bool:
         return (self.username == other.username and
-                self.password == other.password)
+                self._password.value == other.password)
 
     @classmethod
     def factory(
@@ -57,17 +64,19 @@ class Credential(AbstractCredential):
         if not username:
             raise exceptions.CredentialValueError('All arguments are required')
 
-        return cls(
+        _credential = cls(
             username=username,
-            password=password,
+
             active=active
         )
+        _credential.set_password(password)
+        return _credential
 
     def set_password(self, value: str):
-        self.password = value
+        self._password.value = value
 
     def verify_password(self, value: str) -> bool:
-        return self.password == value
+        return self._password == value
 
     def deactivate(self):
         self.active = False

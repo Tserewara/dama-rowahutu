@@ -67,8 +67,10 @@ def test_can_save_credential(session):
 
     _credential = credential.Credential.factory(
         username='tserewara',
-        password='password',
+        password='password1'
     )
+
+    # _credential.set_password('password1')
 
     session.add(_credential)
     session.commit()
