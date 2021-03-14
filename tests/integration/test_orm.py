@@ -1,4 +1,6 @@
-from src.articles.domain.entities import credential, category, article, tag
+from src.articles.domain.entities import credential, category, article, tag, \
+    encryptor
+from src.articles.domain.values import password
 
 
 def tag_factory():
@@ -89,3 +91,19 @@ def test_can_verify_credential_retrieved(session):
     retrieved = session.query(credential.Credential).first()
 
     assert retrieved.verify_password('Password1')
+
+
+def test_returns_true_when_object_is_the_same_after_retrieving(session):
+
+    _credential = credential.Credential(
+        username='tserewara',
+    )
+
+    _credential.set_password('Password1')
+    session.add(_credential)
+    session.commit()
+
+    retrieved = session.query(credential.Credential).first()
+
+    assert retrieved == _credential
+    assert isinstance(retrieved._password, password.Password)

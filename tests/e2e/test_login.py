@@ -11,7 +11,7 @@ def test_happy_path_returns_201_and_success_message_when_logging_succeeds(
 
     _credential = {
         "username": "tserewara",
-        "password": "pass!word"
+        "password": "Password1"
     }
 
     requests.post(f'{url}/credentials', json=_credential)
@@ -29,7 +29,7 @@ def test_unhappy_path_returns_401_and_fail_message_when_username_is_wrong(
 
     _credential = {
         "username": "tserewara",
-        "password": "pass!word"
+        "password": "Password1"
     }
 
     fail_credential = {
@@ -53,7 +53,7 @@ def test_unhappy_path_returns_401_and_fail_message_when_password_is_wrong(
 
     _credential = {
         "username": "tserewara",
-        "password": "pass!word"
+        "password": "Password1"
     }
 
     fail_credential = {

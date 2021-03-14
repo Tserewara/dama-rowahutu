@@ -10,7 +10,7 @@ def test_happy_path_returns_201_and_creates_credential(postgres_session):
 
     _credential = {
         "username": "tserewara",
-        "password": "pass!word"
+        "password": "Password@1"
     }
 
     r = requests.post(f'{url}/credentials', json=_credential)
