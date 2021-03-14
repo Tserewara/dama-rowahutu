@@ -6,7 +6,7 @@ def authenticate(fake_session):
 
     _credential = {
         "username": "tserewara",
-        "password": "pass!word"
+        "password": "Password1"
     }
 
     fake_session.post(f'{url}/credentials', json=_credential)

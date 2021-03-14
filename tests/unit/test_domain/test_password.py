@@ -62,5 +62,3 @@ class TestValidateStrength:
     def test_returns_true_on_dict_when_password_has_digit(self):
         _, result = Password.validate_strength('password1')
         assert result.get('digit') is True
-
-

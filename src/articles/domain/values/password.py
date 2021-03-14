@@ -10,6 +10,9 @@ class Password:
         self._encryptor = encryptor
         self._value = value
 
+    def __repr__(self):
+        return '<Password object {}>'.format(self._value)
+
     def __eq__(self, value: str) -> bool:
         return self._encryptor.verify(value, self._value)
 

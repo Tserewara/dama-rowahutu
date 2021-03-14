@@ -64,6 +64,7 @@ def postgres_db():
 def postgres_session(postgres_db):
     start_mappers()
     session = sessionmaker(bind=postgres_db)()
+    clear_postgres_article_tags(session)
     clear_postgres_articles(session)
     clear_postgres_tags(session)
     clear_postgres_credentials(session)
@@ -91,6 +92,13 @@ def clear_postgres_articles(postgres_session):
 def clear_postgres_credentials(postgres_session):
     postgres_session.execute(
         'DELETE FROM credentials'
+    )
+    postgres_session.commit()
+
+
+def clear_postgres_article_tags(postgres_session):
+    postgres_session.execute(
+        'DELETE FROM article_tags'
     )
     postgres_session.commit()
 

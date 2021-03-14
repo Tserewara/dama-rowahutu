@@ -1,6 +1,7 @@
 from sqlalchemy import (MetaData, Table, Column, Integer, String, ForeignKey,
-                        Enum, DateTime, func, Boolean)
-from sqlalchemy.orm import mapper, relationship
+                        Enum, DateTime, func, PickleType)
+
+from sqlalchemy.orm import mapper, relationship, synonym
 
 from src.articles.domain.entities import credential, category, article, tag
 
@@ -36,8 +37,7 @@ credentials = Table('credentials', metadata,
                            autoincrement=True),
                     Column('username', String, index=True,
                            unique=True, nullable=False),
-                    Column('password', String, nullable=False),
-                    Column('active', Boolean)
+                    Column('_password', PickleType, nullable=False),
                     )
 
 
@@ -51,5 +51,4 @@ def start_mappers():
             backref='tags'
         )
     })
-
     mapper(credential.Credential, credentials)

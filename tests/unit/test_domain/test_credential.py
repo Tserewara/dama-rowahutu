@@ -8,12 +8,12 @@ class TestFactory:
     def test_raises_credential_value_error_when_has_no_username(self):
         with pytest.raises(exceptions.CredentialValueError,
                            match='All arguments are required'):
-            credential.Credential.factory(None, 'password')
+            credential.Credential(None, 'password')
 
     def test_creates_credential_instance(self):
-        my_credential = credential.Credential.factory(
+        my_credential = credential.Credential(
             'username',
-            'password',
+            'password1',
         )
 
         assert isinstance(my_credential, credential.Credential)
@@ -21,7 +21,7 @@ class TestFactory:
     def test_keeps_password_value_when_is_passed(self):
         password = 'password'
 
-        my_credential = credential.Credential.factory(
+        my_credential = credential.Credential(
             'username',
             password,
         )
@@ -38,7 +38,7 @@ class TestCredentialProperties:
             "active": True
         }
 
-        self.credential = credential.Credential.factory(
+        self.credential = credential.Credential(
             self.params['username'],
             self.params['password'],
             self.params['active'],
@@ -57,13 +57,13 @@ class TestCredentialProperties:
 class TestPasswordSetter:
 
     def test_set_password(self):
-        my_credential = credential.Credential.factory(
+        my_credential = credential.Credential(
             'username',
-            'password',
+            'password1',
         )
 
         old_pass = my_credential.password
-        my_credential.set_password('new_password')
+        my_credential.set_password('new_password1')
 
         assert old_pass != my_credential.password
 
@@ -71,12 +71,12 @@ class TestPasswordSetter:
 class TestCredentialEquality:
 
     def test_returns_false_when_username_is_different(self):
-        credential_a = credential.Credential.factory(
+        credential_a = credential.Credential(
             'johndoe',
             'password',
         )
 
-        credential_b = credential.Credential.factory(
+        credential_b = credential.Credential(
             'fulano',
             'password',
         )
@@ -84,12 +84,12 @@ class TestCredentialEquality:
         assert credential_a != credential_b
 
     def test_returns_false_when_password_is_different(self):
-        credential_a = credential.Credential.factory(
+        credential_a = credential.Credential(
             'johndoe',
             'password1',
         )
 
-        credential_b = credential.Credential.factory(
+        credential_b = credential.Credential(
             'johndoe',
             'password2',
         )
@@ -97,13 +97,12 @@ class TestCredentialEquality:
         assert credential_a != credential_b
 
     def test_returns_true_when_username_and_password_are_equal(self):
-
-        credential_a = credential.Credential.factory(
+        credential_a = credential.Credential(
             'johndoe',
             'password',
         )
 
-        credential_b = credential.Credential.factory(
+        credential_b = credential.Credential(
             'johndoe',
             'password',
         )
@@ -114,7 +113,7 @@ class TestCredentialEquality:
 class TestVerifyPassword:
 
     def test_returns_false_when_password_does_not_match(self):
-        my_credential = credential.Credential.factory(
+        my_credential = credential.Credential(
             username='tserewara',
         )
 
@@ -123,8 +122,8 @@ class TestVerifyPassword:
         assert not my_credential.verify_password('password')
 
     def test_returns_true_when_password_matches(self):
-        password = 'password'
-        my_credential = credential.Credential.factory(
+        password = 'password1'
+        my_credential = credential.Credential(
             username='tserewara',
         )
         my_credential.set_password(password)
@@ -135,7 +134,7 @@ class TestVerifyPassword:
 class TestDeactivate:
 
     def test_set_active_to_false_when_deactivates(self):
-        my_credential = credential.Credential.factory(
+        my_credential = credential.Credential(
             username='tserewara',
             active=True
         )

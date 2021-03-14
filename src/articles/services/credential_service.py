@@ -9,7 +9,7 @@ def add_credential(
 
     with uow:
 
-        new_credential = credential.Credential.factory(
+        new_credential = credential.Credential(
             username=username,
         )
 

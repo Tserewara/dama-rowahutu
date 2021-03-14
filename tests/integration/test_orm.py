@@ -65,14 +65,27 @@ def test_orm_saves_date_of_article(session):
 
 def test_can_save_credential(session):
 
-    _credential = credential.Credential.factory(
+    _credential = credential.Credential(
         username='tserewara',
-        password='password1'
     )
 
-    # _credential.set_password('password1')
-
+    _credential.set_password('Password1')
     session.add(_credential)
     session.commit()
 
     assert session.query(credential.Credential).first() == _credential
+
+
+def test_can_verify_credential_retrieved(session):
+
+    _credential = credential.Credential(
+        username='tserewara',
+    )
+
+    _credential.set_password('Password1')
+    session.add(_credential)
+    session.commit()
+
+    retrieved = session.query(credential.Credential).first()
+
+    assert retrieved.verify_password('Password1')

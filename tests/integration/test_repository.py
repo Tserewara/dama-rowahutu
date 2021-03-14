@@ -40,10 +40,12 @@ class TestRepositoryArticles:
 class TestRepositoryCredential:
 
     def test_can_add_credential(self, session):
-        _credential = credential.Credential.factory(
+        _credential = credential.Credential(
             username='tserewara',
-            password='password',
+
         )
+
+        _credential.set_password('Password1')
 
         repo = repository.SqlAlchemyRepositoryCredentials(session)
 
