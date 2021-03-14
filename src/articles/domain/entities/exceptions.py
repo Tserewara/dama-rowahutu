@@ -6,6 +6,10 @@ class CategoryNotFound(Exception):
     pass
 
 
+class TagNotFound(Exception):
+    pass
+
+
 class DuplicateTitle(Exception):
     pass
 
