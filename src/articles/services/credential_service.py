@@ -18,7 +18,7 @@ def add_credential(
         uow.credentials.add(new_credential)
         uow.commit()
 
-    return f'Credential created for {username}'
+        return f'Credential created for {username}'
 
 
 def update_credential(
@@ -27,7 +27,6 @@ def update_credential(
         new_username: str = None,
         new_password: str = None,
 ) -> str:
-
     _credential = get_credential(username, uow)
 
     def update_username():
@@ -51,7 +50,6 @@ def update_credential(
 
 
 def get_credential(username: str, uow: unit_of_work.AbstractUnitOfWork):
-
     _credential = uow.credentials.get(value=username)
 
     if not _credential:
@@ -61,9 +59,7 @@ def get_credential(username: str, uow: unit_of_work.AbstractUnitOfWork):
 
 
 def delete_credential(username: str, uow: unit_of_work.AbstractUnitOfWork):
-
     with uow:
-
         _credential = get_credential(username, uow)
 
         uow.credentials.delete(_credential)

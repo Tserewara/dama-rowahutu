@@ -8,15 +8,13 @@ from tests.unit.test_services.fakes import FakeUnitOfWork
 def test_service_can_create_credential():
     uow = FakeUnitOfWork()
 
-    _credential = ('Tserewara', 'password1')
-
     result = credential_service.add_credential(
-        _credential[0],
-        _credential[1],
+        'Tserewara',
+        'password1',
         uow
     )
 
-    assert result == f'Credential created for {_credential[0]}'
+    assert result == 'Credential created for Tserewara'
 
 
 def test_service_can_update_password():
