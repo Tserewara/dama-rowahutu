@@ -28,3 +28,16 @@ class ArticlesAPI(MethodView):
 
         except (exceptions.CategoryNotFound, exceptions.DuplicateTitle) as e:
             return jsonify(message=str(e)), 404
+
+    @staticmethod
+    def delete(title):
+        try:
+            article_service.delete_article(
+                article_title=title,
+                uow=unit_of_work.SqlAlchemyUnitOfWork()
+            )
+
+            return jsonify({'message': 'Article deleted'}), 200
+
+        except exceptions.ArticleNotFound as e:
+            return jsonify(message=str(e)), 404

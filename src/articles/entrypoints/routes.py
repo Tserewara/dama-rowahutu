@@ -5,7 +5,11 @@ from .views.articles_view import ArticlesAPI
 
 def register_routes(app):
 
-    app.add_url_rule('/articles', view_func=ArticlesAPI.as_view('articles'))
+    articles_view = ArticlesAPI.as_view('articles')
+
+    app.add_url_rule('/articles', view_func=articles_view)
+    app.add_url_rule('/articles/<string:title>', view_func=articles_view,
+                     methods=['GET', 'PUT', 'DELETE'])
 
     app.add_url_rule('/credentials',
                      view_func=CredentialsAPI.as_view('credentials'))
