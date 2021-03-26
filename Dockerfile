@@ -4,11 +4,19 @@ RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev build-base lib
 
 ARG POSTGRES_PASSWORD
 
+ARG MODE
+
 ARG SECRET_KEY
 
 ENV POSTGRES_HOST=damarowahutu-db
 
+ENV SELENIUM_HOST=selenium-host
+
+ENV API_HOST=damarowahutu-app
+
 ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+
+ENV MODE=$MODE
 
 ENV SECRET_KEY=$SECRET_KEY
 

@@ -12,7 +12,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - damarowahutunet
+      - internal-network
 
   app:
     restart: on-failure
@@ -24,12 +24,13 @@ services:
     ports:
       - "5000:5000"
     networks:
-      - damarowahutunet
+      - internal-network
     depends_on:
       - database
 
 networks:
-    damarowahutunet:
+    internal-network:
         driver: bridge
+        name: damarowahutu-network
 volumes:
   pgdata:
