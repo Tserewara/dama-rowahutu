@@ -25,17 +25,34 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Build Dockerfile
+    - name: Build Dockerfile for DB
       run: |
-        docker build -t damarowahutu-postgres --build-arg POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} -f ./database/Dockerfile .
+        docker build -t damarowahutu-postgres \
+        --build-arg POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+        -f ./database/Dockerfile .
+
+    - name: Build Dockerfile for application
+      run: |
+        docker build -t damarowahutu-app \
+        --build-arg POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+        --build-arg SECRET_KEY=${{ secrets.SECRET_KEY }} \
+        --build-arg MODE=DEVELOPMENT .
+
+    - name: Create Docker Network
+      run: |
+        docker network create damarowahutu
 
     - name: Spin up postgres container
       run: |
-        docker run --name damarowahutu-db -p 5432:5432 -d damarowahutu-postgres
+        docker run --name damarowahutu-db -p 5432:5432 --network damarowahutu -d damarowahutu-postgres
 
     - name: Spin up selenium container
-        run: |
-          docker run --name selenium-host -p 4444:4444 -d selenium/standalone-chrome
+      run: |
+        docker run --name selenium-host -p 4444:4444 --network damarowahutu -d selenium/standalone-chrome
+
+    - name: Spin up flask container
+      run: |
+        docker run --name damarowahutu-app -p 5000:5000 --network damarowahutu -d damarowahutu-app
 
     - name: Run unit tests
       run: |
@@ -48,9 +65,5 @@ jobs:
         pytest tests/integration
 
     - name: Run e2e tests
-      env:
-        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       run: |
-        python -m src.articles.entrypoints.web_app &
-        sleep 3
-        pytest tests/e2e
+        docker exec damarowahutu-app python3 -m pytest tests/e2e
