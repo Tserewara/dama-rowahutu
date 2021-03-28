@@ -20,11 +20,6 @@ jobs:
       with:
         python-version: 3.9
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
     - name: Build Dockerfile for DB
       run: |
         docker build -t damarowahutu-postgres \
@@ -56,13 +51,13 @@ jobs:
 
     - name: Run unit tests
       run: |
-        pytest tests/unit
+        docker exec damarowahutu-app python3 -m pytest tests/unit
 
     - name: Run integration tests
       env:
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       run: |
-        pytest tests/integration
+        docker exec damarowahutu-app python3 -m pytest tests/integration
 
     - name: Run e2e tests
       run: |
