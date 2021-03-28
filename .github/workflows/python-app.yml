@@ -33,10 +33,24 @@ jobs:
       run: |
         docker run --name damarowahutu-db -p 5432:5432 -d damarowahutu-postgres
 
-    - name: Run test pytest
+    - name: Spin up selenium container
+        run: |
+          docker run --name selenium-host -p 4444:4444 -d selenium/standalone-chrome
+
+    - name: Run unit tests
+      run: |
+        pytest tests/unit
+
+    - name: Run integration tests
+      env:
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      run: |
+        pytest tests/integration
+
+    - name: Run e2e tests
       env:
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       run: |
         python -m src.articles.entrypoints.web_app &
         sleep 3
-        pytest
+        pytest tests/e2e
