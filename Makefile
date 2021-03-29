@@ -17,7 +17,7 @@ integration-tests: up
 	docker-compose exec -T app pytest tests/integration
 
 e2e-tests: up
-	docker
+	docker-compose exec -T app pytest tests/e2e
 
 logs:
 	docker-compose logs --tail=25 app
@@ -25,20 +25,11 @@ logs:
 down:
 	docker-compose down --remove-orphans
 
-all: down build up test
-
 local_test:
 	docker-compose build --no-cache --build-arg POSTGRES_PASSWORD=tserewara \
 	--build-arg SECRET_KEY=tserewara \
 	--build-arg MODE=DEVELOPMENT
 
 	docker-compose up -d
-	docker run --name selenium-host -p 4444:4444 \
-	--network damarowahutu-network -d selenium/standalone-chrome
-
 	docker-compose exec app pytest
-
-selenium_down:
-	docker stop -t 0 selenium-host
-	docker container prune -f
 

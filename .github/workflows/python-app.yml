@@ -41,10 +41,6 @@ jobs:
       run: |
         docker run --name damarowahutu-db -p 5432:5432 --network damarowahutu -d damarowahutu-postgres
 
-    - name: Spin up selenium container
-      run: |
-        docker run --name selenium-host -p 4444:4444 --network damarowahutu -d selenium/standalone-chrome
-
     - name: Spin up flask container
       run: |
         docker run --name damarowahutu-app -p 5000:5000 --network damarowahutu -d damarowahutu-app

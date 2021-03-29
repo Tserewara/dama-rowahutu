@@ -7,4 +7,3 @@ requests
 sqlalchemy
 bcrypt
 passlib
-selenium

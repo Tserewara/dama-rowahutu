@@ -1,11 +1,9 @@
-import os
 import time
 from pathlib import Path
 
 import pytest
 import requests
-from selenium import webdriver
-from selenium.webdriver import DesiredCapabilities
+
 from sqlalchemy import create_engine
 from requests.exceptions import ConnectionError
 from sqlalchemy.exc import OperationalError
@@ -53,17 +51,6 @@ def wait_for_webapp_to_come_up():
         except ConnectionError:
             time.sleep(0.5)
     pytest.fail('API never came up')
-
-
-@pytest.fixture(scope='session')
-def selenium_web_driver():
-
-    host = os.environ.get('SELENIUM_HOST', 'localhost')
-
-    return webdriver.Remote(
-        command_executor=f'http://{host}:4444/wd/hub',
-        desired_capabilities=DesiredCapabilities.CHROME
-    )
 
 
 @pytest.fixture(scope='session')
