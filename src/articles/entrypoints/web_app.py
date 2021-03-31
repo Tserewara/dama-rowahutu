@@ -1,5 +1,5 @@
 from src.articles.adapters import orm
-from src.articles.entrypoints import create_app
+from src.articles.entrypoints.app_factory import create_app
 
 app = create_app()
 orm.start_mappers()
