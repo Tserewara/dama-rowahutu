@@ -1,0 +1,50 @@
+body {
+    font-family: 'Roboto';
+    background: url('/static_folder/img/nightsky.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+#login-box {
+    margin: auto;
+    margin-top: 5rem;
+    padding: 2rem;
+    text-align: center;
+    border: solid 1px gray;
+    border-radius: 4px;
+    width: 16rem;
+    background-color: #fff;
+    border: 1px solid #eff1f9;
+}
+
+#form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-bottom: 3rem;
+    width: 15rem;
+}
+
+input {
+    font-family: 'Roboto';
+    margin-bottom: 1rem;
+    padding: .5rem;
+    border-radius: 4px;
+    border: solid 1px gray;
+}
+
+#submit {
+    font-family: 'Roboto';
+    padding: .5rem;
+    border: none;
+    border-radius: 4px;
+    background: #000;
+    color: #fff;
+}
+
+#submit:hover {
+    background: #302923;
+}
+
+i {
+    font-size: 3rem;
+}

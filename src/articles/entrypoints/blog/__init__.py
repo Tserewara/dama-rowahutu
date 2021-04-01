@@ -1,7 +1,9 @@
 from flask import Blueprint
 
-blog = Blueprint('articles_bp',
+blog = Blueprint('blog',
                  __name__,
-                 template_folder='templates')
+                 template_folder='templates',
+                 static_folder='static_folder'
+                 )
 
 from .routes import blog
