@@ -9,6 +9,6 @@ def authenticate(fake_session):
         "password": "Password1"
     }
 
-    fake_session.post(f'{url}/credentials', json=_credential)
+    fake_session.post(f'{url}/api/credentials', json=_credential)
 
-    fake_session.post(f'{url}/login', json=_credential)
+    fake_session.post(f'{url}/api/login', json=_credential)

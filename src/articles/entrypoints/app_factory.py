@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 
-from src.articles.entrypoints.rest_api.routes import register_routes
+
 from src.articles.adapters.start_db import wait_for_postgres_to_come_up
 
 
@@ -16,8 +16,6 @@ def create_app():
 
     app.register_blueprint(rest_api)
     app.register_blueprint(blog)
-
-    app = register_routes(app)
 
     wait_for_postgres_to_come_up()
 

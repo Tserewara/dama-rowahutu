@@ -14,9 +14,9 @@ def test_happy_path_returns_201_and_success_message_when_logging_succeeds(
         "password": "Password1"
     }
 
-    requests.post(f'{url}/credentials', json=_credential)
+    requests.post(f'{url}/api/credentials', json=_credential)
 
-    r = requests.post(f'{url}/login', json=_credential)
+    r = requests.post(f'{url}/api/login', json=_credential)
 
     assert r.status_code == 200
     assert r.json()['message'] == 'Logging successful!'
@@ -37,9 +37,9 @@ def test_unhappy_path_returns_401_and_fail_message_when_username_is_wrong(
         "password": "pass!word"
     }
 
-    requests.post(f'{url}/credentials', json=_credential)
+    requests.post(f'{url}/api/credentials', json=_credential)
 
-    r = requests.post(f'{url}/login', json=fail_credential)
+    r = requests.post(f'{url}/api/login', json=fail_credential)
 
     assert r.status_code == 401
     assert r.json()['message'] == 'Invalid credential. Username not found.'
@@ -61,9 +61,9 @@ def test_unhappy_path_returns_401_and_fail_message_when_password_is_wrong(
         "password": "pass!word1"
     }
 
-    requests.post(f'{url}/credentials', json=_credential)
+    requests.post(f'{url}/api/credentials', json=_credential)
 
-    r = requests.post(f'{url}/login', json=fail_credential)
+    r = requests.post(f'{url}/api/login', json=fail_credential)
 
     assert r.status_code == 401
     assert r.json()['message'] == 'Password wrong!'
