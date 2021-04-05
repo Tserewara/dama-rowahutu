@@ -30,5 +30,10 @@ async function sendCredentialsToApi(credentials) {
 
     const response = await request.json()
 
-    window.location.href = '/secret'
+    if (response.message === 'Logging successful!') {
+        window.location.href = '/secret'
+
+    } else {
+        console.log(response)
+    }
 }
