@@ -11,6 +11,10 @@ def get_articles():
         return render_template('home.html', articles=articles), 200
 
 
+def home():
+    return render_template('home.html'), 200
+
+
 def login():
     return render_template('login.html'), 200
 

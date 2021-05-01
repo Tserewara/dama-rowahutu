@@ -1,0 +1,173 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark: #1c1e24;
+  --medium-dark: #373a41;
+  --dark-red: #cf2d20;
+  --light-red: #e04e39;
+  --pearl: #ebeef2;
+  --font-title: "Poppins", sans-serif;
+  --heading-color: #495057;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  height: 80px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.brand span:hover {
+  color: var(--dark-red);
+}
+
+.brand span {
+  font-weight: bold;
+  color: var(--heading-color);
+}
+
+.logo {
+  height: 32px;
+  width: 32px;
+  background: var(--dark-red);
+  margin-right: 8px;
+}
+
+.menu-item {
+  margin-right: 16px;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--heading-color);
+}
+
+.menu-item:hover {
+  color: var(--dark-red);
+}
+
+.title {
+  font-family: var(--font-title);
+  font-weight: 700;
+  margin-top: 2rem;
+  color: var(--dark-red);
+}
+
+.lg-pad {
+  padding: 0 15rem;
+}
+
+.search {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 4px;
+  border: solid 2px var(--pearl);
+  font-size: 20px;
+  width: 100%;
+}
+
+.search:focus {
+  outline: none !important;
+  border: 2px solid var(--dark-red);
+}
+
+.article {
+  border: solid 1px var(--pearl);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.article:hover {
+  background: var(--pearl);
+}
+
+.thumb {
+  margin: 0 2rem;
+  font-size: 48px;
+  color: var(--heading-color);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.article-title {
+  text-decoration: none;
+  color: var(--heading-color);
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.description {
+  line-height: 1.5;
+}
+
+footer {
+  margin-top: 4rem;
+  text-align: center;
+  padding: 1rem;
+  background: var(--pearl);
+}
+
+@media only screen and (max-width: 1200px) {
+  .lg-pad {
+    padding: 0 10rem;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .lg-pad {
+    padding: 0 5rem;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .lg-pad {
+    padding: 0 2rem;
+  }
+
+  .fas {
+    font-size: 32px;
+  }
+  .article-title {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .thumb,
+  .description {
+    display: none;
+  }
+
+  .menu-item {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 321px) {
+  .menu-item {
+    font-size: 12px;
+  }
+}

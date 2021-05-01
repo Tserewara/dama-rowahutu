@@ -5,17 +5,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <link rel="shortcut icon" href="{{ url_for('blog.static', filename='img/favicon.ico')}}" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="{{ url_for('blog.static', filename='css/home.css')}}">
+    <title>Dama Rowahutu</title>
 </head>
 
 <body>
-    <h1>Articles</h1>
-    {% for article in articles %}
-    <h2>{{ article.title }}</h2>
-    <p>{{ article.description }}</p>
-    <p>{{ article.content }}</p>
-    <p>{{ article.category }}</p>
-    <hr> {% endfor %}
+    <header class="header lg-pad">
+
+        <a href="#" class="brand">
+            <div class="logo"></div>
+            <span>Dama Rowahutu</span>
+        </a>
+
+        <nav class="menu">
+            <a class="menu-item" href="#">Artigos</a>
+            <a class="menu-item" href="#">Exercícios</a>
+            <a class="menu-item" href="#">Cultura</a>
+        </nav>
+
+    </header>
+
+    <section class="hero lg-pad">
+        <h1 class="title">Aprenda Xavante</h1>
+        <sub>Dama rowahutu da</sub>
+        <input class="search" type="text" name="" id="" placeholder="Pesquisar no site...">
+    </section>
+
+    <section class="articles lg-pad">
+        <h2 class="title">Novidades</h2>
+
+        {% for i in range(10)%}
+        <div class="article">
+            <i class="fas fa-chalkboard-teacher thumb"></i>
+            <div class="info">
+                <a href="#" class="article-title">Como se apresentar em Xavante</a>
+                <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis reiciendis
+                    blanditiis hic quis
+                    corrupti, nobis nulla voluptates modi nihil, nam atque, ut odit expedita. Nisi expedita doloribus
+                    sapiente totam at?</p>
+            </div>
+        </div>
+        {% endfor %}
+
+
+
+    </section>
+    <footer>
+        &copy; 2021 - MT
+    </footer>
+    <script src="{{url_for('blog.static', filename='js/home.js')}}"></script>
 </body>
 
 </html>
