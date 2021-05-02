@@ -15,6 +15,10 @@ def home():
     return render_template('home.html'), 200
 
 
+def editor():
+    return render_template('editor.html'), 200
+
+
 def login():
     return render_template('login.html'), 200
 
