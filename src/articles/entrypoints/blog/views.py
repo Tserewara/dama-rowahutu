@@ -1,5 +1,6 @@
 from flask import render_template
 
+from src.articles.domain.entities import category
 from src.articles.entrypoints.authentication import authentication_required
 from src.articles.services import unit_of_work
 
@@ -16,7 +17,8 @@ def home():
 
 
 def editor():
-    return render_template('editor.html'), 200
+    categories = [e for e in category.Category]
+    return render_template('editor.html', categories=categories), 200
 
 
 def login():

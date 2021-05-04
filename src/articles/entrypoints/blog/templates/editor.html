@@ -8,14 +8,67 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
     <!-- Editor's Style -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+
+    <link rel="stylesheet" href="{{url_for('blog.static', filename='css/modal.css')}}">
+    <link rel="stylesheet" href="{{url_for('blog.static', filename='css/editor.css')}}">
     <title>Document</title>
 </head>
 
 <body>
-    <h1>Editor</h1>
+    <header class="header">
+        <h1>Editor</h1>
+        <div class="info">
+            <span class="info-item">Descrição</span>
+            <span class="info-item">Tags</span>
+            <span class="info-item">Categoria</span>
+        </div>
+    </header>
+
     <div id="editor"></div>
 
+
+    <div id="description" class="modal-content">
+        <h2>Descrição</h2>
+        <textarea id="article-description" name="description" cols="30" rows="10" value="Oi"></textarea>
+        <button id="btn-description">Salvar</button>
+    </div>
+
+    <div id="tags" class="modal-content">
+        <h2>Tags</h2>
+        <input name="tags" type="text">
+        <button>Salvar</button>
+    </div>
+
+    <div id="category" class="modal-content">
+        <h2>Categoria</h2>
+
+        <select name="categories">
+            {% for category in categories %}
+            <option value="{{category.value}}">{{category}}</option>
+            {% endfor %}
+        </select>
+
+        <button>Salvar</button>
+    </div>
+    <button id="btn-save" class="btn">Salvar Artigo</button>
+
+
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+
+    <script src="{{url_for('blog.static', filename='js/modal.js')}}"></script>
     <script src="{{url_for('blog.static', filename='js/editor.js')}}"></script>
 </body>
 

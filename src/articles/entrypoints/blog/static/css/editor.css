@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark: #1c1e24;
+  --medium-dark: #373a41;
+  --dark-red: #cf2d20;
+  --light-red: #e04e39;
+  --pearl: #ebeef2;
+  --font-title: "Poppins", sans-serif;
+  --heading-color: #495057;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  position: relative;
+  margin: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header h1 {
+  font-family: var(--font-title);
+}
+
+.info-item {
+  margin-left: 8px;
+  padding: 0.5rem 1rem;
+  border: solid 1px var(--pearl);
+  border-radius: 4px;
+  color: var(--medium-dark);
+}
+
+.info-item:hover {
+  background: var(--pearl);
+  cursor: pointer;
+}
+
+.btn {
+  background: #fff;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: solid 1px var(--medium-dark);
+  border-radius: 4px;
+  color: var(--medium-dark);
+  font-weight: bold;
+}
+
+.btn:hover {
+  background: var(--medium-dark);
+  cursor: pointer;
+  color: var(--pearl);
+}
+
+.description {
+  background: #fff;
+}
+
+.description h2,
+input,
+button {
+  margin-bottom: 1rem;
+}
+
+textarea[name="description"] {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid var(--medium-dark);
+  padding: 16px;
+  font-size: 16px;
+  font-family: var(--font-title);
+  height: 120px;
+  margin-bottom: 1rem;
+}
+
+textarea[name="description"]:focus {
+  outline: none;
+  border: 2px solid var(--dark-red);
+}
+
+.description button {
+  background: var(--medium-dark);
+  color: var(--pearl);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-title);
+  width: 8rem;
+}
+
+.description button:hover {
+  background-color: var(--dark);
+}
