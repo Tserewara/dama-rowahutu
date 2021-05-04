@@ -8,9 +8,17 @@ from tests.unit.test_services.fakes import FakeUnitOfWork
 def test_service_can_add_tag():
     uow = FakeUnitOfWork()
 
-    tag_service.add_tag('verbos', uow)
+    tag_name = tag_service.add_tag('verbos', uow)
 
-    assert uow.tags.list().pop() == 'verbos'
+    assert tag_name == 'verbos'
+
+
+def test_service_raises_error_for_duplicate_tag():
+    uow = FakeUnitOfWork()
+
+    with pytest.raises(exceptions.DuplicateTag):
+        tag_service.add_tag('verbos', uow)
+        tag_service.add_tag('verbos', uow)
 
 
 def test_gets_valid_tags():

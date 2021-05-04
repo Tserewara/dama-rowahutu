@@ -10,6 +10,10 @@ class TagNotFound(Exception):
     pass
 
 
+class DuplicateTag(Exception):
+    pass
+
+
 class DuplicateTitle(Exception):
     pass
 

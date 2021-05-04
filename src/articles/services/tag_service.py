@@ -6,7 +6,16 @@ from src.articles.services import unit_of_work
 
 def add_tag(tag_name: str, uow: unit_of_work.AbstractUnitOfWork) -> str:
     with uow:
-        uow.tags.add(tag_name)
+
+        tags = uow.tags.list()
+
+        _tag = tag.Tag(tag_name)
+
+        if _tag in tags:
+            raise exceptions.DuplicateTag(f'Tag {tag_name} is duplicate')
+
+        uow.tags.add(_tag)
+        uow.commit()
 
     return tag_name
 
