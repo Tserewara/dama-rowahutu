@@ -29,21 +29,16 @@ modalTargets.forEach((target, i) => {
         }
 
         if (i === 1) {
-            createModal(modalContents[i], 'tags');
+            createModal(modalContents[i],
+                'tags',
+                width = '50%'
+            );
         }
         if (i === 2) {
             createModal(modalContents[i], 'category');
         }
     });
 });
-
-let article = {
-    title: '',
-    description: '',
-    content: '',
-    tags: [],
-    category_id: 1
-}
 
 
 const getContent = () => editor.getHtml();
@@ -56,11 +51,11 @@ const getTitle = (articleString = '') => {
         return articleHtml.querySelector('h1').textContent;
 
     } catch (error) {
-        console.log('Nada aqui')
+        console.log('Nada aqui');
 
-    }
+    };
 
-}
+};
 
 const getDescription = () => {
     const descriptionEl = document.querySelector("#article-description")
@@ -70,19 +65,22 @@ const getDescription = () => {
 const getCategory = () => {
     const categoryEl = document.querySelector("#category > select");
     return categoryEl.value;
-}
+};
+
+
+const getTags = () => tagList;
 
 const buildArticle = () => {
-    const filledArticle = {
-        ...article,
+    const article = {
         title: getTitle(editor.getHtml()),
         description: getDescription(),
         content: getContent(),
         category_id: getCategory(),
+        tags: getTags(),
     }
 
-    console.log(JSON.stringify(filledArticle));
-    sendArticloToApi(filledArticle)
+    console.log(JSON.stringify(article));
+    sendArticloToApi(article);
 
 }
 
@@ -98,7 +96,8 @@ const sendArticloToApi = async (article) => {
         body: JSON.stringify(article)
     })
 
-    const response = await request.json();
-
-    console.log(response);
+    if (!request.ok) {
+        const response = await request.json();
+        alert(response['message']);
+    }
 }

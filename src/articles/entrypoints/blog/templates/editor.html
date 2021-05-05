@@ -41,33 +41,42 @@
 
     <div id="description" class="modal-content">
         <h2>Descrição</h2>
-        <textarea id="article-description" name="description" cols="30" rows="10" value="Oi"></textarea>
-        <button id="btn-description">Salvar</button>
+        <textarea id="article-description" name="description"></textarea>
+        <button id="btn-description" class="btn">Salvar</button>
     </div>
 
     <div id="tags" class="modal-content">
         <h2>Tags</h2>
-        <input name="tags" type="text">
-        <button>Salvar</button>
+        <div id="tag-container">
+            {% for tag in tags%}
+            <span class="tag">{{tag}}</span>
+            {% endfor %}
+        </div>
+
+        <div class="new-tag">
+            <input name="tags" type="text" placeholder="Nova Tag...">
+            <button id="add-tag" class="btn">+</button>
+        </div>
+        <button id="btn-tags" class="btn">Salvar</button>
     </div>
 
     <div id="category" class="modal-content">
         <h2>Categoria</h2>
 
         <select name="categories">
-            {% for category in categories %}
-            <option value="{{category.value}}">{{category}}</option>
+            {% for name, category in categories.items() %}
+            <option value="{{category.value}}">{{name}}</option>
             {% endfor %}
         </select>
 
-        <button>Salvar</button>
+        <button id="btn-category" class="btn">Salvar</button>
     </div>
+
     <button id="btn-save" class="btn">Salvar Artigo</button>
 
 
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-
-
+    <script src="{{url_for('blog.static', filename='js/tags.js')}}"></script>
     <script src="{{url_for('blog.static', filename='js/modal.js')}}"></script>
     <script src="{{url_for('blog.static', filename='js/editor.js')}}"></script>
 </body>

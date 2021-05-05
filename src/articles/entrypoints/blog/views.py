@@ -17,8 +17,20 @@ def home():
 
 
 def editor():
-    categories = [e for e in category.Category]
-    return render_template('editor.html', categories=categories), 200
+    categories = {
+        'GUIA': category.Category.GUIDE,
+        'CULTURA': category.Category.CULTURE,
+        'EXERCÍCIOS': category.Category.EXERCISES
+    }
+
+    with unit_of_work.SqlAlchemyUnitOfWork() as uow:
+        tags = uow.tags.list()
+        serialized_tags = [tag.name for tag in tags]
+
+    return render_template('editor.html',
+                           categories=categories,
+                           tags=serialized_tags
+                           ), 200
 
 
 def login():

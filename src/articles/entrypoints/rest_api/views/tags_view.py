@@ -14,7 +14,7 @@ class TagsAPI(MethodView):
 
         try:
             tag_name = tag_service.add_tag(
-                tag_name=request.json['tag_name'],
+                tag_name=request.json['tag_name'].lower(),
                 uow=unit_of_work.SqlAlchemyUnitOfWork()
             )
 
