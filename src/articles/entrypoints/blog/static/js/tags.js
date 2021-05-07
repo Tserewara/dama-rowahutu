@@ -56,6 +56,7 @@ const toggleTag = event => {
         target.classList.remove('selected-tag');
         tagList = tagList.filter(tag => tag != textContent);
     };
+    console.log(tagList);
 };
 
 let tagList = [];

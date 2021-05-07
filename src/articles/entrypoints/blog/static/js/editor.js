@@ -26,7 +26,7 @@ modalTargets.forEach((target, i) => {
                 actionElement = document.querySelector("#btn-description"),
                 callback = getDescription,
             );
-        }
+        };
 
         if (i === 1) {
             createModal(modalContents[i],
@@ -80,14 +80,14 @@ const buildArticle = () => {
     }
 
     console.log(JSON.stringify(article));
-    sendArticloToApi(article);
+    sendArticleToApi(article);
 
 }
 
 saveButtonEl.onclick = buildArticle;
 
 
-const sendArticloToApi = async (article) => {
+const sendArticleToApi = async (article) => {
     const request = await fetch('/api/articles', {
         method: 'post',
         headers: {
