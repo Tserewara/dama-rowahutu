@@ -30,11 +30,11 @@
 <section class="articles lg-pad">
     <h2 class="title">Novidades</h2>
 
-    {% for i in range(10)%}
+    {% for article in articles %}
     <div class="article">
         <i class="fas fa-chalkboard-teacher thumb"></i>
         <div class="info">
-            <a href="#" class="article-title">Como se apresentar em Xavante</a>
+            <a href="/artigo/{{article.title}}" class="article-title">{{article.title}}</a>
             <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis reiciendis
                 blanditiis hic quis
                 corrupti, nobis nulla voluptates modi nihil, nam atque, ut odit expedita. Nisi expedita doloribus

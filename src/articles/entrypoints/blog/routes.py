@@ -2,7 +2,7 @@ from . import blog, views
 
 urls_views = [
     ('/', views.home),
-    ('/artigos', views.get_articles),
+    ('/artigo/<string:title>', views.article),
     ('/login', views.login),
     ('/secret', views.secret),
     ('/editor', views.editor),
