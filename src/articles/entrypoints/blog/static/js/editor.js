@@ -46,14 +46,25 @@ modalTargets.forEach((target, i) => {
     });
 });
 
+const validateArticle = (article) => {
+    return article.title && article.description;
+}
 
 saveButtonEl.onclick = async () => {
-    const articleJSON = buildArticleJSON();
-    console.log(articleJSON);
-    const response = await Api.saveArticle(articleJSON);
+    const article = buildArticle();
+
+    if (!validateArticle(article)) {
+        alert('Title or Descriptionmissing!!')
+        return;
+    }
+
+    const response = await Api.saveArticle(article);
+
     if (response.ok) {
         console.log('Artigo Salvo')
     } else {
         console.log(await response.json())
     }
 };
+
+

@@ -2,15 +2,12 @@ const getContent = () => editor.getHtml();
 
 const getTitle = (articleString = '') => {
 
-    try {
-        const parser = new DOMParser();
-        const articleHtml = parser.parseFromString(articleString, 'text/html');
+    const parser = new DOMParser();
+    const articleHtml = parser.parseFromString(articleString, 'text/html');
+    if (articleString) {
         return articleHtml.querySelector('h1').textContent;
+    }
 
-    } catch (error) {
-        alert('Artigo precisa de um título');
-
-    };
 
 };
 
@@ -28,12 +25,13 @@ const getCategory = () => {
 const getTags = () => tagList;
 
 
-const buildArticleJSON = () => {
-    return ({
-        title: getTitle(editor.getHtml()),
-        description: getDescription(),
-        content: getContent(),
-        category_id: getCategory(),
-        tags: getTags(),
-    });
+const buildArticle = () => {
+    return (
+        {
+            title: getTitle(editor.getHtml()),
+            description: getDescription(),
+            content: getContent(),
+            category_id: getCategory(),
+            tags: getTags(),
+        })
 };
