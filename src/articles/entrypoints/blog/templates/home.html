@@ -6,20 +6,7 @@
 {% endblock %}
 
 {% block body %}
-<header class="header lg-pad">
-
-    <a href="#" class="brand">
-        <div class="logo"></div>
-        <span>Dama Rowahutu</span>
-    </a>
-
-    <nav class="menu">
-        <a class="menu-item" href="#">Guias</a>
-        <a class="menu-item" href="#">Exercícios</a>
-        <a class="menu-item" href="#">Cultura</a>
-    </nav>
-
-</header>
+{% include 'partials/header.html' %}
 
 <section class="hero lg-pad">
     <h1 class="title">Aprenda Xavante</h1>
@@ -35,10 +22,7 @@
         <i class="fas fa-chalkboard-teacher thumb"></i>
         <div class="info">
             <a href="/artigo/{{article.title}}" class="article-title">{{article.title}}</a>
-            <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis reiciendis
-                blanditiis hic quis
-                corrupti, nobis nulla voluptates modi nihil, nam atque, ut odit expedita. Nisi expedita doloribus
-                sapiente totam at?</p>
+            <p class="description">{{article.description}}</p>
         </div>
     </div>
     {% endfor %}
@@ -46,7 +30,5 @@
 
 
 </section>
-<footer>
-    &copy; 2021 - MT
-</footer>
+{% include 'partials/footer.html' %}
 {% endblock %}
