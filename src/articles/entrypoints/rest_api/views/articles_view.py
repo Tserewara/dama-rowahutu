@@ -8,7 +8,7 @@ from src.articles.services import article_service, unit_of_work
 
 
 class ArticlesAPI(MethodView):
-    decorators = [authentication_required]
+    # decorators = [authentication_required]
 
     @staticmethod
     def post():
@@ -19,7 +19,7 @@ class ArticlesAPI(MethodView):
                 description=request.json['description'],
                 content=request.json['content'],
                 tags=request.json['tags'],
-                category_id=request.json['category_id'],
+                category_id=int(request.json['category_id']),
                 uow=unit_of_work.SqlAlchemyUnitOfWork()
             )
 

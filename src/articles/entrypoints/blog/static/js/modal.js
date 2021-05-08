@@ -22,7 +22,7 @@ const createModal = (
     modal.style.width = width;
     modal.appendChild(closingButton);
 
-    if (actionElement !== null) {
+    if (actionElement) {
         addActionElement(mask, modal, actionElement, callback);
     };
 

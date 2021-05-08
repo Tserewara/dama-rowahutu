@@ -1,84 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
-    <!-- Editor's Style -->
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+{% block styles %}
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@400;700&display=swap"
-        rel="stylesheet">
+<!-- Editor's Dependecy Style -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
+<!-- Editor's Style -->
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<link rel="stylesheet" href="{{url_for('blog.static', filename='css/modal.css')}}">
+<link rel="stylesheet" href="{{url_for('blog.static', filename='css/editor.css')}}">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-        crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+{% endblock %}
 
-    <link rel="stylesheet" href="{{url_for('blog.static', filename='css/modal.css')}}">
-    <link rel="stylesheet" href="{{url_for('blog.static', filename='css/editor.css')}}">
-    <title>Document</title>
-</head>
+{% block body %}
+<header class="header">
+    <h1>Editor</h1>
+    <div class="info">
+        <span class="info-item">Descrição</span>
+        <span class="info-item">Tags</span>
+        <span class="info-item">Categoria</span>
+    </div>
+</header>
 
-<body>
-    <header class="header">
-        <h1>Editor</h1>
-        <div class="info">
-            <span class="info-item">Descrição</span>
-            <span class="info-item">Tags</span>
-            <span class="info-item">Categoria</span>
-        </div>
-    </header>
-
-    <div id="editor"></div>
+<div id="editor"></div>
 
 
-    <div id="description" class="modal-content">
-        <h2>Descrição</h2>
-        <textarea id="article-description" name="description"></textarea>
-        <button id="btn-description" class="btn">Salvar</button>
+<div id="description" class="modal-content">
+    <h2>Descrição</h2>
+    <textarea id="article-description" name="description"></textarea>
+    <button id="btn-description" class="btn">Salvar</button>
+</div>
+
+<div id="tags" class="modal-content">
+    <h2>Tags</h2>
+    <div id="tag-container">
+        {% for tag in tags%}
+        <span class="tag">{{tag}}</span>
+        {% endfor %}
     </div>
 
-    <div id="tags" class="modal-content">
-        <h2>Tags</h2>
-        <div id="tag-container">
-            {% for tag in tags%}
-            <span class="tag">{{tag}}</span>
-            {% endfor %}
-        </div>
-
-        <div class="new-tag">
-            <input name="tags" type="text" placeholder="Nova Tag...">
-            <button id="add-tag" class="btn">+</button>
-        </div>
-        <button id="btn-tags" class="btn">Salvar</button>
+    <div class="new-tag">
+        <input name="tags" type="text" placeholder="Nova Tag...">
+        <button id="add-tag" class="btn">+</button>
     </div>
+    <button id="btn-tags" class="btn">Salvar</button>
+</div>
 
-    <div id="category" class="modal-content">
-        <h2>Categoria</h2>
+<div id="category" class="modal-content">
+    <h2>Categoria</h2>
 
-        <select name="categories">
-            {% for name, category in categories.items() %}
-            <option value="{{category.value}}">{{name}}</option>
-            {% endfor %}
-        </select>
+    <select name="categories">
+        {% for name, category in categories.items() %}
+        <option value="{{category.value}}">{{name}}</option>
+        {% endfor %}
+    </select>
 
-        <button id="btn-category" class="btn">Salvar</button>
-    </div>
+    <button id="btn-category" class="btn">Salvar</button>
+</div>
 
-    <button id="btn-save" class="btn">Salvar Artigo</button>
+<button id="btn-save" class="btn">Salvar Artigo</button>
 
+{% endblock %}
 
-    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-    <script src="{{url_for('blog.static', filename='js/tags.js')}}"></script>
-    <script src="{{url_for('blog.static', filename='js/modal.js')}}"></script>
-    <script src="{{url_for('blog.static', filename='js/editor.js')}}"></script>
-</body>
-
-</html>
+{% block scripts %}
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="{{url_for('blog.static', filename='js/modal.js')}}"></script>
+<script src="{{url_for('blog.static', filename='js/api.js')}}"></script>
+<script src="{{url_for('blog.static', filename='js/tags.js')}}"></script>
+<script src="{{url_for('blog.static', filename='js/article.js')}}"></script>
+<script src="{{url_for('blog.static', filename='js/editor.js')}}"></script>
+{% endblock %}

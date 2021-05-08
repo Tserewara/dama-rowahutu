@@ -24,80 +24,36 @@ modalTargets.forEach((target, i) => {
                 additionalClass = 'description',
                 width = '50%',
                 actionElement = document.querySelector("#btn-description"),
-                callback = getDescription,
+
             );
         };
 
         if (i === 1) {
             createModal(modalContents[i],
                 'tags',
-                width = '50%'
+                width = '50%',
+                actionElement = document.querySelector("#btn-tags"),
             );
         }
+
         if (i === 2) {
-            createModal(modalContents[i], 'category');
+            createModal(modalContents[i],
+                'categories',
+                width = '50%',
+                actionElement = document.querySelector("#btn-category"),
+            );
         }
     });
 });
 
 
-const getContent = () => editor.getHtml();
-
-const getTitle = (articleString = '') => {
-
-    try {
-        const parser = new DOMParser();
-        const articleHtml = parser.parseFromString(articleString, 'text/html');
-        return articleHtml.querySelector('h1').textContent;
-
-    } catch (error) {
-        console.log('Nada aqui');
-
-    };
-
-};
-
-const getDescription = () => {
-    const descriptionEl = document.querySelector("#article-description")
-    return descriptionEl.value;
-};
-
-const getCategory = () => {
-    const categoryEl = document.querySelector("#category > select");
-    return categoryEl.value;
-};
-
-
-const getTags = () => tagList;
-
-const buildArticle = () => {
-    const article = {
-        title: getTitle(editor.getHtml()),
-        description: getDescription(),
-        content: getContent(),
-        category_id: getCategory(),
-        tags: getTags(),
+saveButtonEl.onclick = async () => {
+    const articleJSON = buildArticleJSON();
+    console.log(articleJSON);
+    const response = await Api.saveArticle(articleJSON);
+    if (response.ok) {
+        console.log('Artigo Salvo')
+    } else {
+        console.log(await response.json())
     }
-
-    console.log(JSON.stringify(article));
-    sendArticleToApi(article);
-
-}
-
-saveButtonEl.onclick = buildArticle;
-
-
-const sendArticleToApi = async (article) => {
-    const request = await fetch('/api/articles', {
-        method: 'post',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(article)
-    })
-
-    if (!request.ok) {
-        const response = await request.json();
-        alert(response['message']);
-    }
-}
+};

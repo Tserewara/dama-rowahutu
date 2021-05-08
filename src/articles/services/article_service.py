@@ -6,7 +6,7 @@ def add_article(
         title: str,
         description: str,
         content: str,
-        category_id: id,
+        category_id: int,
         uow: unit_of_work.AbstractUnitOfWork,
         tags: list = None) -> str:
     with uow:
