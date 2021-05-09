@@ -31,7 +31,7 @@ async function sendCredentialsToApi(credentials) {
     const response = await request.json()
 
     if (response.message === 'Logging successful!') {
-        window.location.href = '/secret'
+        window.location.href = '/editor'
 
     } else {
         console.log(response)

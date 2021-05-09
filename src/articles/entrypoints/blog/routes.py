@@ -4,7 +4,6 @@ urls_views = [
     ('/', views.home),
     ('/artigo/<string:title>', views.article),
     ('/login', views.login),
-    ('/secret', views.secret),
     ('/editor', views.editor),
 ]
 

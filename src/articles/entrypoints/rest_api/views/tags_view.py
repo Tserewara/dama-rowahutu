@@ -7,7 +7,7 @@ from src.articles.services import tag_service, unit_of_work
 
 
 class TagsAPI(MethodView):
-    # decorators = [authentication_required]
+    decorators = [authentication_required]
 
     @staticmethod
     def post():

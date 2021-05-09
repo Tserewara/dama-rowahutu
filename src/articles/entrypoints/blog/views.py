@@ -12,6 +12,7 @@ def home():
         return render_template('home.html', articles=articles), 200
 
 
+@authentication_required
 def editor():
     categories = {
         'GUIA': category.Category.GUIDE,

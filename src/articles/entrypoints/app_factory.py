@@ -13,9 +13,11 @@ def create_app():
 
     from .rest_api import rest_api
     from .blog import blog
+    from .cli import cli
 
     app.register_blueprint(rest_api)
     app.register_blueprint(blog)
+    app.register_blueprint(cli)
 
     wait_for_postgres_to_come_up()
 

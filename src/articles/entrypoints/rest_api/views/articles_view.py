@@ -8,7 +8,7 @@ from src.articles.services import article_service, unit_of_work
 
 
 class ArticlesAPI(MethodView):
-    # decorators = [authentication_required]
+    decorators = [authentication_required]
 
     @staticmethod
     def post():
