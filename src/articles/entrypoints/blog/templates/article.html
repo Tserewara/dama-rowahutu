@@ -2,12 +2,17 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('blog.static', filename='css/home.css')}}">
+<link rel="stylesheet" href="{{ url_for('blog.static', filename='css/article.css')}}">
 {% endblock %}
 
 
 
 {% block body %}
 {% include 'partials/header.html' %}
-{{_article.content|safe}}
+
+<article>
+    {{_article.content|safe}}
+</article>
+
 {% include 'partials/footer.html' %}
 {% endblock %}

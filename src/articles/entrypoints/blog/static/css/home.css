@@ -15,8 +15,16 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   font-family: "Inter", sans-serif;
   position: relative;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
 }
 
 .header {

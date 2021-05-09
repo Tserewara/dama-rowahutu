@@ -1,0 +1,42 @@
+article {
+  padding: 1rem 15rem;
+}
+
+h1 {
+  margin: 3rem 0;
+  font-family: "Poppins";
+  font-size: 40px;
+}
+
+p {
+  margin-bottom: 1rem;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+@media only screen and (max-width: 1200px) {
+  article {
+    padding: 0 10rem;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  article {
+    padding: 0 5rem;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  article {
+    padding: 0 2rem;
+  }
+}
+
+@media only screen and (max-width: 321px) {
+  h1 {
+    font-size: 20px;
+  }
+  p {
+    font-size: 18px;
+  }
+}
