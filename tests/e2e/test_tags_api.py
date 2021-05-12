@@ -15,7 +15,7 @@ def test_happy_path_post_returns_201_and_tag_name(postgres_session):
 
     tag = {'tag_name': 'verbos'}
 
-    r = requests.post(f'{url}/api/tags', json=tag)
+    r = fake_session.post(f'{url}/api/tags', json=tag)
 
     assert r.status_code == 201
     assert r.json()['message'] == tag['tag_name']
@@ -31,8 +31,8 @@ def test_unhappy_path_post_returns_409_and_error_message(postgres_session):
 
     tag = {'tag_name': 'verbos'}
 
-    requests.post(f'{url}/api/tags', json=tag)
-    r = requests.post(f'{url}/api/tags', json=tag)
+    fake_session.post(f'{url}/api/tags', json=tag)
+    r = fake_session.post(f'{url}/api/tags', json=tag)
 
     assert r.status_code == 409
     assert r.json()['message'] == f'Tag {tag["tag_name"]} is duplicate'
