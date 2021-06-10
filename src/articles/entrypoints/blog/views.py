@@ -36,13 +36,8 @@ def article(title):
 
         if _article:
             return render_template('article.html', _article=_article)
-    return '<h1>not found</h1>', 404
+    return '<h1>Página não encontrada</h1>', 404
 
 
 def login():
     return render_template('login.html'), 200
-
-
-@authentication_required
-def secret():
-    return render_template('secret.html'), 200
