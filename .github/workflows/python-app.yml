@@ -49,12 +49,12 @@ jobs:
       run: |
         docker exec damarowahutu-app python3 -m pytest tests/unit
 
-    - name: Run integration tests
-      env:
-        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      run: |
-        docker exec damarowahutu-app python3 -m pytest tests/integration
+#    - name: Run integration tests
+#      env:
+#        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+#      run: |
+#        docker exec damarowahutu-app python3 -m pytest tests/integration
 
-    - name: Run e2e tests
-      run: |
-        docker exec damarowahutu-app python3 -m pytest tests/e2e
+#    - name: Run e2e tests
+#      run: |
+#        docker exec damarowahutu-app python3 -m pytest tests/e2e
