@@ -1,12 +1,6 @@
-FROM ubuntu:latest
+FROM python:3.8-alpine
 
-ARG DEBIAN_FRONTEND=noninteractive
-
-ENV TZ=Europe/Sao_Paulo
-
-RUN apt update && apt install -y tzdata
-
-RUN apt install -y python3 python3-pip postgresql gcc musl-dev build-essential libpq-dev
+RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev build-base libffi-dev
 
 ARG POSTGRES_PASSWORD
 
@@ -15,6 +9,7 @@ ARG MODE
 ARG SECRET_KEY
 
 ENV POSTGRES_HOST=damarowahutu-db
+
 
 ENV API_HOST=damarowahutu-app
 
