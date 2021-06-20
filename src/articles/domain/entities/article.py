@@ -14,12 +14,21 @@ class Article:
                  content: str,
                  tags: List[Tag],
                  category: Category = Category.GUIDE):
-        self.title = title
+        self._title = title
         self.description = description
         self.content = content
         self.tags = tags
         self.category = category
         self.created_on = datetime.now()
+        self.url = self.build_friendly_url()
+
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, new_title):
+        self._title = new_title
         self.url = self.build_friendly_url()
 
     def build_friendly_url(self):

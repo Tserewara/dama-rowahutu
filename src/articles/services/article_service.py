@@ -37,13 +37,13 @@ def add_article(
 
 
 def update_article(
-        article_title: str,
+        article_url: str,
         uow: unit_of_work.AbstractUnitOfWork,
         **kwargs,
 ):
     with uow:
 
-        _article = uow.articles.get(value=article_title)
+        _article = uow.articles.get(value=article_url)
 
         if not _article:
             raise exceptions.ArticleNotFound('Article not found.')
@@ -53,7 +53,7 @@ def update_article(
 
         uow.commit()
 
-    return article_title
+    return _article.title
 
 
 def delete_article(article_url, uow: unit_of_work.AbstractUnitOfWork) -> str:
@@ -88,8 +88,8 @@ def title_is_duplicate(
 
 
 def update_attribute(
-        _article,
-        attribute,
+        _article: article.Article,
+        attribute: str,
         _kwargs,
         uow: unit_of_work.AbstractUnitOfWork
 ):

@@ -97,7 +97,7 @@ def test_service_adds_an_article():
 
     article_title = article_service.add_article(**_article, uow=uow)
 
-    result = uow.articles.get('An article')
+    result = uow.articles.get('an-article')
 
     assert article_title == 'An article'
     assert result.tags == [tag.Tag('verbos'), tag.Tag('substantivos')]
@@ -156,11 +156,12 @@ def test_can_update_article_title():
     article_service.add_article(**_article, uow=uow)
 
     article_service.update_article(
-        article_title='An article',
+        article_url='an-article',
         title='A new article',
-        uow=uow)
+        uow=uow
+    )
 
-    updated = uow.articles.get(value='A new article')
+    updated = uow.articles.get(value='a-new-article')
 
     assert updated.title == 'A new article'
 
@@ -181,11 +182,11 @@ def test_can_update_article_description():
     create_tags(uow)
 
     article_service.update_article(
-        article_title='An article',
+        article_url='an-article',
         description='Simple description',
         uow=uow)
 
-    updated = uow.articles.get(value='An article')
+    updated = uow.articles.get(value='an-article')
 
     assert updated.description == 'Simple description'
 
@@ -205,19 +206,19 @@ def test_can_update_many_article_attributes_at_once():
 
     article_service.add_article(**_article, uow=uow)
 
-    _article = uow.articles.get('An article')
+    _article = uow.articles.get('an-article')
 
     assert _article.tags == [tag.Tag('verbos'), tag.Tag('substantivos')]
 
     article_service.update_article(
-        article_title='An article',
+        article_url='an-article',
         description='A new description',
         content='A new content',
         category=2,
         tags=['dicas'],
         uow=uow)
 
-    updated = uow.articles.get('An article')
+    updated = uow.articles.get('an-article')
 
     assert updated.description == 'A new description'
     assert updated.content == 'A new content'
@@ -240,7 +241,7 @@ def test_can_update_tags_of_article():
 
     article_service.add_article(**_article, uow=uow)
 
-    _article = uow.articles.get(value='An article')
+    _article = uow.articles.get(value='an-article')
 
     article_service.update_attribute(
         _article,
@@ -249,7 +250,7 @@ def test_can_update_tags_of_article():
         uow=uow
     )
 
-    updated = uow.articles.get(value='An article')
+    updated = uow.articles.get(value='an-article')
     assert updated.tags == [tag.Tag('verbos')]
 
 
@@ -268,7 +269,7 @@ def test_raises_article_not_found_entity_when_updating():
 
     with pytest.raises(exceptions.ArticleNotFound, match='Article not found.'):
         article_service.update_article(
-            article_title='Another article',
+            article_url='another-article',
             title='A new article',
             uow=uow
         )
@@ -289,7 +290,7 @@ def test_raises_attribute_error_when_updating_non_existent_attribute():
 
     with pytest.raises(AttributeError):
         article_service.update_article(
-            article_title='An article',
+            article_url='an-article',
             uow=uow,
             wrong_attribute='Another article'
         )
@@ -319,7 +320,7 @@ def test_raises_duplicate_title_error_when_updating_and_title_exists():
 
     with pytest.raises(exceptions.DuplicateTitle):
         article_service.update_article(
-            article_title='An article 1',
+            article_url='an-article-1',
             title='An article 2',
             uow=uow,
         )
@@ -347,4 +348,4 @@ def test_raises_article_not_found_error_when_deleting_non_existent_article():
     uow = FakeUnitOfWork()
 
     with pytest.raises(exceptions.ArticleNotFound):
-        article_service.delete_article('An article', uow)
+        article_service.delete_article('an-article', uow)

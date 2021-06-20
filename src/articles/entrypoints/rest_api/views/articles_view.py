@@ -32,7 +32,7 @@ class ArticlesAPI(MethodView):
     def delete(title):
         try:
             article_service.delete_article(
-                article_title=title,
+                article_url=title,
                 uow=unit_of_work.SqlAlchemyUnitOfWork()
             )
 
