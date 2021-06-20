@@ -34,7 +34,7 @@ class SqlAlchemyRepositoryArticles(AbstractRepository):
 
     def get(self, value: str):
         return self.session.query(article.Article).filter_by(
-            title=value).first()
+            url=value).first()
 
     def delete(self, entity: article.Article):
         self.session.delete(entity)

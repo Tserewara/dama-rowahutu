@@ -68,7 +68,7 @@ def test_happy_path_delete_returns_200_and_message(postgres_session):
 
     fake_session.post(f'{url}/api/articles', json=article)
 
-    r = fake_session.delete(f'{url}/api/articles/An article')
+    r = fake_session.delete(f'{url}/api/articles/an-article')
     assert r.status_code == 200
     assert r.json()['message'] == 'Article deleted'
 

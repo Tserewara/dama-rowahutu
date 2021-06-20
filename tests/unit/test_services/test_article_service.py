@@ -338,7 +338,7 @@ def test_deletes_an_article():
 
     article_service.add_article(**_article, uow=uow)
 
-    article_service.delete_article('An article', uow)
+    article_service.delete_article('an-article', uow)
 
     assert uow.articles.list() == []
 

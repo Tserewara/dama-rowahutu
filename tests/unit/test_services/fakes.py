@@ -14,7 +14,7 @@ class FakeRepositoryArticles(repository.AbstractRepository):
 
     def get(self, value: str):
         for item in self.list():
-            if item.title == value:
+            if item.url == value:
                 return item
 
     def delete(self, entity):

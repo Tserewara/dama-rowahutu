@@ -9,7 +9,9 @@ metadata = MetaData()
 
 articles = Table('articles', metadata,
                  Column('id', Integer, primary_key=True, autoincrement=True),
-                 Column('title', String, index=True, unique=True,
+                 Column('title', String, unique=True,
+                        nullable=False),
+                 Column('url', String, index=True, unique=True,
                         nullable=False),
                  Column('description', String, nullable=False),
                  Column('content', String, nullable=False),

@@ -56,9 +56,9 @@ def update_article(
     return article_title
 
 
-def delete_article(article_title, uow: unit_of_work.AbstractUnitOfWork) -> str:
+def delete_article(article_url, uow: unit_of_work.AbstractUnitOfWork) -> str:
     with uow:
-        _article = uow.articles.get(article_title)
+        _article = uow.articles.get(article_url)
 
         if not _article:
             raise exceptions.ArticleNotFound('Article not found.')
@@ -67,7 +67,7 @@ def delete_article(article_title, uow: unit_of_work.AbstractUnitOfWork) -> str:
 
         uow.commit()
 
-    return article_title
+    return article_url
 
 
 def title_is_duplicate(

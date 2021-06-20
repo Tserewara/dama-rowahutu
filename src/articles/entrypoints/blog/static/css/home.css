@@ -10,15 +10,14 @@
   --dark-red: #cf2d20;
   --light-red: #e04e39;
   --pearl: #ebeef2;
-  --font-title: "Poppins", sans-serif;
+  --font-title: "Open Sans", sans-serif;
   --heading-color: #495057;
 }
 
 body {
   display: flex;
   flex-direction: column;
-  font-family: "Inter", sans-serif;
-  position: relative;
+  font-family: var(--font-title);
   height: 100vh;
   min-height: 100vh;
 }

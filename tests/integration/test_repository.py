@@ -20,7 +20,7 @@ class TestRepositoryArticles:
 
         assert session.query(article.Article).first() == _article
 
-    def test_gets_article_by_title(self, session):
+    def test_gets_article_by_url(self, session):
         _article = article.Article(
             title='An article',
             description='A great description',
@@ -34,7 +34,7 @@ class TestRepositoryArticles:
         repo.add(_article)
         session.commit()
 
-        assert _article == repo.get(value='An article')
+        assert _article == repo.get(value='an-article')
 
 
 class TestRepositoryCredential:
