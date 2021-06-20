@@ -38,3 +38,28 @@ def test_can_create_short_article_with_timestamp():
     )
 
     assert _article.created_on
+
+
+def test_can_create_article_with_friendly_url():
+    _article = article.Article(
+        title="Um artigo precisa ter uma url amigável?",
+        description="Post de boas vindas",
+        content="Este é o dama rowahutu!",
+        category=category.Category.GUIDE,
+        tags=tag_factory(),
+    )
+
+    assert _article.url == 'um-artigo-precisa-ter-uma-url-amigável'
+
+
+def test_remove_special_characters_returns_clean_string():
+    _article = article.Article(
+        title="Um artigo ĩwẽ precisa ter uma url amigável?",
+        description="Post de boas vindas",
+        content="Este é o dama rowahutu!",
+        category=category.Category.GUIDE,
+        tags=tag_factory(),
+    )
+
+    assert _article._remove_special_characters() == \
+           'Um artigo ĩwẽ precisa ter uma url amigável '

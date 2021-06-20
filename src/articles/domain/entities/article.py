@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 from typing import List
 
@@ -19,3 +20,14 @@ class Article:
         self.tags = tags
         self.category = category
         self.created_on = datetime.now()
+        self.url = self.build_friendly_url()
+
+    def build_friendly_url(self):
+        clean_title = self._remove_special_characters()
+        split_title = clean_title.lower().split()
+        self.url = '-'.join(e for e in split_title if e.isalnum())
+        return self.url
+
+    def _remove_special_characters(self):
+        return re.sub(r"\W+|_", " ", self.title)
+
