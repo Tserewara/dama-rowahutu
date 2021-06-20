@@ -11,20 +11,20 @@
 <section class="hero lg-pad">
     <h1 class="title">Aprenda Xavante</h1>
     <sub>Dama rowahutu da</sub>
-<!--    <input class="search" type="text" name="" id="" placeholder="Pesquisar no site...">-->
+    <!--    <input class="search" type="text" name="" id="" placeholder="Pesquisar no site...">-->
 </section>
 
 <section class="articles lg-pad">
     <h2 class="title">Novidades</h2>
 
     {% for article in articles %}
-    <div class="article">
+    <a href="/artigo/{{article.title}}" class="article">
         <i class="fas fa-chalkboard-teacher thumb"></i>
         <div class="info">
-            <a href="/artigo/{{article.title}}" class="article-title">{{article.title}}</a>
+            <p class="article-title">{{article.title}}</p>
             <p class="description">{{article.description}}</p>
         </div>
-    </div>
+    </a>
     {% endfor %}
 
 

@@ -95,11 +95,13 @@ main {
 }
 
 .article {
+  text-decoration: none;
   border: solid 1px var(--pearl);
   border-radius: 4px;
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  color: var(--heading-color);
 }
 
 .article:hover {
@@ -120,7 +122,6 @@ main {
 }
 
 .article-title {
-  text-decoration: none;
   color: var(--heading-color);
   font-family: var(--font-title);
   font-weight: 700;

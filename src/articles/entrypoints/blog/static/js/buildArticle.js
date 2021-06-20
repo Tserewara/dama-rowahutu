@@ -1,11 +1,17 @@
-const getContent = () => editor.getHtml();
+const getContent = () => editor.getHTML();
 
-const getTitle = (articleString = '') => {
+const getTitle = () => {
+
+    const articleString = editor.getHTML()
 
     const parser = new DOMParser();
     const articleHtml = parser.parseFromString(articleString, 'text/html');
     if (articleString) {
-        return articleHtml.querySelector('h1').textContent;
+        try {
+            return articleHtml.querySelector('h1').textContent;
+        } catch (error) {
+            alert("Título precisa ser no formato # Título")
+        }
     }
 
 
@@ -24,11 +30,10 @@ const getCategory = () => {
 
 const getTags = () => tagList;
 
-
 const buildArticle = () => {
     return (
         {
-            title: getTitle(editor.getHtml()),
+            title: getTitle(),
             description: getDescription(),
             content: getContent(),
             category_id: getCategory(),
