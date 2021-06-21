@@ -81,6 +81,6 @@ def test_unhappy_path_delete_returns_404_and_message(postgres_session):
 
     authenticate(fake_session)
 
-    r = fake_session.delete(f'{url}/api/articles/An article')
+    r = fake_session.delete(f'{url}/api/articles/an-article')
     assert r.status_code == 404
     assert r.json()['message'] == 'Article not found.'
